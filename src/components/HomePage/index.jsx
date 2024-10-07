@@ -1,11 +1,16 @@
-import PropTypes from "prop-types";
 import PostPreview from "../PostPreview";
+import { useOutletContext } from "react-router-dom";
 
-function HomePage({ posts }) {
-  return posts.map((p) => <PostPreview key={p.id} post={p} />);
+function HomePage() {
+  const { postsMap } = useOutletContext();
+  if (postsMap) {
+    const postPreviews = [];
+    for (const post of postsMap.values()) {
+      postPreviews.push(<PostPreview key={post.id} post={post} />);
+    }
+    return postPreviews;
+  }
+  return null;
 }
 
-HomePage.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.object),
-};
 export default HomePage;
