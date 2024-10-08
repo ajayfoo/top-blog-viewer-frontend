@@ -1,6 +1,3 @@
-.post {
-  margin-inline: var(--size-2);
-}
 .post > header {
   display: flex;
   flex-wrap: wrap;

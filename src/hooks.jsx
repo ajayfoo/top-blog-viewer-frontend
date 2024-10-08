@@ -41,4 +41,14 @@ const usePostsMap = () => {
   return postsMap;
 };
 
-export { usePostsMap };
+const useComments = (postId) => {
+  const comments = useFetchData(
+    import.meta.env.VITE_API_URL + "/posts/" + postId + "/comments"
+  );
+  return comments;
+};
+useComments.propTypes = {
+  postId: PropTypes.number,
+};
+
+export { usePostsMap, useComments };
