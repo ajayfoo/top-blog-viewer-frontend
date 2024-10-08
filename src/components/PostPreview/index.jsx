@@ -6,14 +6,16 @@ import { format } from "date-fns";
 function PostPreview({ post }) {
   const updatedAt = format(post.updatedAt, "d MMM yyyy");
   return (
-    <article className={classes["post-preview"]}>
-      <p>{updatedAt}</p>
-      <h2 className={classes.title}>
-        <Link to={"/" + post.id}>{post.title}</Link>
-      </h2>
-      <p className={classes.body}>{post.body}</p>
-      <p>{post.author}</p>
-    </article>
+    <Link className={classes["post-link"]} to={"/" + post.id}>
+      <article className={classes["post-preview"]}>
+        <p>{updatedAt}</p>
+        <div className={classes.content}>
+          <h2 className={classes.title}>{post.title}</h2>
+          <p className={classes.body}>{post.body}</p>
+        </div>
+        <p className={classes.author}>{post.author}</p>
+      </article>
+    </Link>
   );
 }
 

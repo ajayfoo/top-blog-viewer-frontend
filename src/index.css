@@ -13,6 +13,8 @@
     "Helvetica Neue",
     sans-serif;
   color-scheme: light dark;
+  --size-1: clamp(0.5rem, 1.5vw, 1rem);
+  --size-2: clamp(1rem, 3vw, 2rem);
 }
 
 @media screen and (prefers-color-scheme: light) {
