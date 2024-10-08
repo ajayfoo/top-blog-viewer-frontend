@@ -1,5 +1,6 @@
 import PostPreview from "../PostPreview";
 import { useOutletContext } from "react-router-dom";
+import classes from "./style.module.css";
 
 function HomePage() {
   const { postsMap } = useOutletContext();
@@ -8,7 +9,7 @@ function HomePage() {
     for (const post of postsMap.values()) {
       postPreviews.push(<PostPreview key={post.id} post={post} />);
     }
-    return postPreviews;
+    return <main className={classes["home-page"]}>{postPreviews}</main>;
   }
   return null;
 }

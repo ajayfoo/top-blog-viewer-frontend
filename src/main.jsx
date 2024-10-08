@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import PostPage from "./components/PostPage";
 import HomePage from "./components/HomePage/index.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
