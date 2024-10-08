@@ -6,7 +6,13 @@ function PostPage() {
   const { postsMap } = useOutletContext();
   const { postId } = useParams();
   const postIdInt = parseInt(postId);
-  return postsMap && <Post post={postsMap.get(postIdInt)} />;
+  return (
+    postsMap && (
+      <main>
+        <Post post={postsMap.get(postIdInt)} />
+      </main>
+    )
+  );
 }
 
 PostPage.propTypes = {

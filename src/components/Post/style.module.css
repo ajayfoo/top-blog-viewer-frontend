@@ -1,0 +1,18 @@
+.post {
+  margin-inline: var(--size-2);
+}
+.post > header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-2);
+  margin-block-end: var(--size-1);
+}
+.author {
+  font-weight: 600;
+}
+.body {
+  line-height: 1.2lh;
+  word-spacing: 0.15rem;
+  letter-spacing: 0.05rem;
+}
