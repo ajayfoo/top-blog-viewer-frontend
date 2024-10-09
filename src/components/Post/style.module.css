@@ -1,12 +1,17 @@
 .post > header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--size-3);
   margin-block-end: var(--size-2);
 }
 .author {
   font-weight: 600;
+  color: var(--primary);
+  font-size: var(--fs-1);
+}
+.title {
+  color: var(--secondary);
+}
+.updated-at {
+  color: var(--tertiary);
+  font-size: var(--fs-1);
 }
 .body {
   line-height: 1.2lh;
