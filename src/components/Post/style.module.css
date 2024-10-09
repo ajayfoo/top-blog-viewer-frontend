@@ -4,14 +4,12 @@
 .author {
   font-weight: 600;
   color: var(--primary);
-  font-size: var(--fs-1);
 }
 .title {
   color: var(--secondary);
 }
 .updated-at {
   color: var(--tertiary);
-  font-size: var(--fs-1);
 }
 .body {
   line-height: 1.2lh;

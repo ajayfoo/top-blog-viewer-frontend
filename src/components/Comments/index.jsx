@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useComments } from "../../hooks";
 import Comment from "../Comment";
 import classes from "./style.module.css";
+import AddComment from "../AddComment";
 function Comments({ postId }) {
   const comments = useComments(postId);
   return (
@@ -9,6 +10,7 @@ function Comments({ postId }) {
       <h2 className={classes.heading}>Comments</h2>
       {comments && (
         <div className={classes["comment-items"]}>
+          <AddComment postId={postId} />
           {comments.map((c) => (
             <Comment key={c.id} comment={c} />
           ))}

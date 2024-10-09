@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 const useFetchData = (url) => {
-  const [array, setArray] = useState(null);
+  const [data, setData] = useState(null);
   useEffect(() => {
     const controller = new AbortController();
     const fetchAndSetPosts = async () => {
@@ -11,8 +11,8 @@ const useFetchData = (url) => {
           signal: controller.signal,
           mode: "cors",
         });
-        const arr = await res.json();
-        setArray(arr);
+        const d = await res.json();
+        setData(d);
       } catch (err) {
         if (err.name === "AbortError") return;
         console.error(err);
@@ -23,7 +23,7 @@ const useFetchData = (url) => {
       controller.abort();
     };
   }, [url]);
-  return array;
+  return data;
 };
 useFetchData.propTypes = {
   url: PropTypes.string,
@@ -51,4 +51,20 @@ useComments.propTypes = {
   postId: PropTypes.number,
 };
 
-export { usePostsMap, useComments };
+const useLocalStorage = (key) => {
+  const store = {
+    subscribe(listener) {
+      window.addEventListener("storage", listener);
+      return () => {
+        window.removeEventListener("storage", listener);
+      };
+    },
+    getSnapshot() {
+      return localStorage.getItem(key);
+    },
+  };
+  const value = useSyncExternalStore(store.subscribe, store.getSnapshot);
+  return value;
+};
+
+export { usePostsMap, useComments, useLocalStorage };
