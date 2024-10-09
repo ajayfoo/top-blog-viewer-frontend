@@ -15,7 +15,7 @@ const postComment = async (postId, comment, auth) => {
   return res;
 };
 
-function AddComment({ postId }) {
+function AddComment({ postId, onAddComment }) {
   const [comment, setComment] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
   const handleCommentChange = (e) => {
@@ -25,7 +25,15 @@ function AddComment({ postId }) {
     const auth = localStorage.getItem("auth");
     setIsDisabled(true);
     try {
-      await postComment(postId, comment, auth);
+      const res = await postComment(postId, comment, auth);
+      const resJson = await res.json();
+      const newComment = {
+        id: resJson.id,
+        content: comment,
+        user: "",
+        createdAt: resJson.createdAt,
+      };
+      onAddComment(newComment);
     } catch (err) {
       console.error(err);
     } finally {
@@ -53,6 +61,7 @@ function AddComment({ postId }) {
 
 AddComment.propTypes = {
   postId: PropTypes.number,
+  onAddComment: PropTypes.func,
 };
 
 export default AddComment;

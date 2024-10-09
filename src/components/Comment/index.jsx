@@ -6,7 +6,7 @@ function Comment({ comment }) {
   return (
     <article className={classes.comment}>
       <header>
-        <p className={classes.username}>{comment.user.username}</p>
+        <p className={classes.username}>{comment.user}</p>
         <p className={classes["time-elapsed"]}>{timeElapsed}</p>
       </header>
       <p className={classes.content}>{comment.content}</p>

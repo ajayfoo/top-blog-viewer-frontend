@@ -23,14 +23,14 @@ const useFetchData = (url) => {
       controller.abort();
     };
   }, [url]);
-  return data;
+  return [data, setData];
 };
 useFetchData.propTypes = {
   url: PropTypes.string,
 };
 
 const usePostsMap = () => {
-  const posts = useFetchData(import.meta.env.VITE_API_URL + "/posts");
+  const [posts] = useFetchData(import.meta.env.VITE_API_URL + "/posts");
   if (!posts) {
     return null;
   }
@@ -42,10 +42,10 @@ const usePostsMap = () => {
 };
 
 const useComments = (postId) => {
-  const comments = useFetchData(
+  const [comments, setComments] = useFetchData(
     import.meta.env.VITE_API_URL + "/posts/" + postId + "/comments"
   );
-  return comments;
+  return [comments, setComments];
 };
 useComments.propTypes = {
   postId: PropTypes.number,
