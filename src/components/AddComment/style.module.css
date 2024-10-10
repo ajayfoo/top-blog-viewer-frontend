@@ -38,3 +38,12 @@
   border-radius: var(--size-1);
   cursor: pointer;
 }
+
+.add-button:disabled {
+  filter: brightness(70%);
+  cursor: unset;
+}
+
+.add-button-spinning {
+  composes: add-button;
+}

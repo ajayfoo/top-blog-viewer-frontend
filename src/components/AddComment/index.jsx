@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import classes from "./style.module.css";
 import { useLocalStorage } from "../../hooks";
+import Spinner from "../Spinner";
 
 const postComment = async (postId, comment, auth) => {
   const url = import.meta.env.VITE_API_URL + "/posts/" + postId + "/comments";
@@ -20,17 +21,21 @@ const postComment = async (postId, comment, auth) => {
 function AddComment({ postId, onAddComment }) {
   const [comment, setComment] = useState("");
   const username = useLocalStorage("username");
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
   const handleAddCommentClick = async () => {
     if (comment === "") return;
     const auth = localStorage.getItem("auth");
-    setIsDisabled(true);
+    setIsSending(true);
     try {
       const res = await postComment(postId, comment, auth);
       const resJson = await res.json();
+      if (!res.ok) {
+        console.error("Something went wrong");
+        return;
+      }
       const newComment = {
         id: resJson.id,
         content: comment,
@@ -41,11 +46,12 @@ function AddComment({ postId, onAddComment }) {
     } catch (err) {
       console.error(err);
     } finally {
-      setIsDisabled(false);
       setComment("");
+      setIsSending(false);
     }
   };
   const textareaId = "add-comment-textarea";
+  const buttonIsDisabled = comment === "" || isSending;
   return (
     <article className={classes["add-comment"]}>
       <section className={classes.field}>
@@ -54,7 +60,7 @@ function AddComment({ postId, onAddComment }) {
           id={textareaId}
           onChange={handleCommentChange}
           value={comment}
-          disabled={isDisabled}
+          disabled={isSending}
           className={classes["comment-textarea"]}
           cols="75"
           rows="5"
@@ -63,12 +69,12 @@ function AddComment({ postId, onAddComment }) {
         ></textarea>
       </section>
       <button
-        disabled={isDisabled}
+        disabled={buttonIsDisabled}
         type="button"
         onClick={handleAddCommentClick}
-        className={classes["add-button"]}
+        className={classes[isSending ? "add-button-spinning" : "add-button"]}
       >
-        Add Comment
+        {isSending ? <Spinner /> : "Add Comment"}
       </button>
     </article>
   );
