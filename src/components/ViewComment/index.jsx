@@ -91,7 +91,7 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
       <p className={classes.content}>{comment.content}</p>
       {showDeleteModal && (
         <ConfirmModal
-          message="Delete the comment?"
+          message="Are you sure you want to delete the comment?"
           onCancel={handleCloseModal}
           onConfirm={handleConfirmDelete}
           ref={modalRef}

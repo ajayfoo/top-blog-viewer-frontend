@@ -1,19 +1,20 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
+import classes from "./style.module.css";
 
 const ConfirmModal = forwardRef(function ConfirmModal(
   { message, onCancel, onConfirm },
   ref
 ) {
   return (
-    <dialog ref={ref}>
+    <dialog onClose={onCancel} ref={ref} className={classes["confirm-modal"]}>
       <form method="dialog">
-        <p>{message}</p>
-        <div className="action-buttons">
-          <button type="button" onClick={onCancel}>
+        <p className={classes.message}>{message}</p>
+        <div className={classes["action-buttons"]}>
+          <button className={classes.cancel} type="button" onClick={onCancel}>
             Cancel
           </button>
-          <button type="button" onClick={onConfirm}>
+          <button className={classes.confirm} type="button" onClick={onConfirm}>
             Confirm
           </button>
         </div>
