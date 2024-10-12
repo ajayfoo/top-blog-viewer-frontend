@@ -24,26 +24,29 @@
   border-color: var(--outline);
 }
 
-.comment-textarea,
-.add-button {
+.comment-textarea {
   font-family: inherit;
   font-size: inherit;
 }
-.add-button {
-  justify-self: flex-end;
-  background-color: var(--primary-container);
-  color: var(--on-primary-container);
+.add-button,
+.cancel-button {
   border: none;
   padding: var(--size-1) var(--size-2);
   border-radius: var(--size-1);
-  cursor: pointer;
 }
-
-.add-button:disabled {
-  filter: brightness(70%);
-  cursor: unset;
+.add-button {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
 }
-
+.cancel-button {
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
 .add-button-spinning {
   composes: add-button;
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--size-1);
 }

@@ -74,9 +74,14 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
           maxLength="500"
         ></textarea>
       </section>
-      <div className="action-buttons">
+      <div className={classes["action-buttons"]}>
         {onCancel && (
-          <button type="button" onClick={onCancel}>
+          <button
+            className={classes["cancel-button"]}
+            type="button"
+            onClick={onCancel}
+            disabled={isSending}
+          >
             Cancel
           </button>
         )}

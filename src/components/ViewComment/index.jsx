@@ -16,6 +16,7 @@ function ViewComment({ comment, onClickEdit }) {
             type="button"
             onClick={onClickEdit}
             className={classes["edit-button"]}
+            title="edit comment"
           >
             <img
               className={classes["edit-icon"]}
