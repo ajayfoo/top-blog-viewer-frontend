@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 import classes from "./style.module.css";
 import { format } from "date-fns";
+import { useOutletContext, useParams } from "react-router-dom";
 
-function Post({ post }) {
+function Post() {
+  const { postsMap } = useOutletContext();
+  const { postId } = useParams();
+  if (!postsMap) return null;
+  const post = postsMap.get(parseInt(postId));
   const updatedAt = format(post.updatedAt, "d MMM yyyy");
   return (
     <section className={classes.post}>

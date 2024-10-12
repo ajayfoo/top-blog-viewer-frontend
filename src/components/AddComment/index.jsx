@@ -3,6 +3,7 @@ import { useState } from "react";
 import classes from "./style.module.css";
 import { useLocalStorage } from "../../hooks";
 import Spinner from "../Spinner";
+import { useParams } from "react-router-dom";
 
 const postComment = async (postId, comment, auth) => {
   const url = import.meta.env.VITE_API_URL + "/posts/" + postId + "/comments";
@@ -18,7 +19,8 @@ const postComment = async (postId, comment, auth) => {
   return res;
 };
 
-function AddComment({ postId, onAddComment }) {
+function AddComment({ onAddComment }) {
+  const { postId } = useParams();
   const [comment, setComment] = useState("");
   const username = useLocalStorage("username");
   const [isSending, setIsSending] = useState(false);
@@ -31,16 +33,16 @@ function AddComment({ postId, onAddComment }) {
     setIsSending(true);
     try {
       const res = await postComment(postId, comment, auth);
-      const resJson = await res.json();
       if (!res.ok) {
         console.error("Something went wrong");
         return;
       }
+      const resJson = await res.json();
       const newComment = {
         id: resJson.id,
         content: comment,
         user: username,
-        createdAt: resJson.createdAt,
+        updatedAt: resJson.createdAt,
       };
       onAddComment(newComment);
     } catch (err) {
@@ -81,7 +83,6 @@ function AddComment({ postId, onAddComment }) {
 }
 
 AddComment.propTypes = {
-  postId: PropTypes.number,
   onAddComment: PropTypes.func,
 };
 
