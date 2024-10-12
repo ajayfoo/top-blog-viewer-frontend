@@ -25,6 +25,9 @@ function CommentsSection() {
       ...comments.slice(targetIndex + 1),
     ]);
   };
+  const handleDeleteComment = (id) => {
+    setComments(comments.filter((c) => c.id !== id));
+  };
   return (
     <div className={classes.comments}>
       <h2 className={classes.heading}>Comments</h2>
@@ -36,6 +39,7 @@ function CommentsSection() {
               key={c.id}
               comment={c}
               onUpdateComment={handleUpdateComment}
+              onDeleteComment={handleDeleteComment}
             />
           ))}
         </div>
