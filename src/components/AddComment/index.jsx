@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./style.module.css";
 import { useLocalStorage } from "../../hooks";
 import Spinner from "../Spinner";
 import { useParams } from "react-router-dom";
+import ErrorModal from "../ErrorModal";
 
 const postComment = async (postId, comment, auth) => {
   const url = import.meta.env.VITE_API_URL + "/posts/" + postId + "/comments";
@@ -24,6 +25,8 @@ function AddComment({ onAddComment }) {
   const [comment, setComment] = useState("");
   const username = useLocalStorage("username");
   const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState(null);
+  const errorModalRef = useRef(null);
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
@@ -34,8 +37,7 @@ function AddComment({ onAddComment }) {
     try {
       const res = await postComment(postId, comment, auth);
       if (!res.ok) {
-        console.error("Something went wrong");
-        return;
+        throw new Error(res.status + ": " + res.statusText);
       }
       const resJson = await res.json();
       const newComment = {
@@ -47,10 +49,19 @@ function AddComment({ onAddComment }) {
       onAddComment(newComment);
     } catch (err) {
       console.error(err);
+      setError("Add comment request failed!");
     } finally {
       setComment("");
       setIsSending(false);
     }
+  };
+  useEffect(() => {
+    if (!error) return;
+    errorModalRef.current.showModal();
+  }, [error]);
+  const handleErrorModalClose = () => {
+    errorModalRef.current.close();
+    setError(null);
   };
   const textareaId = "add-comment-textarea";
   const buttonIsDisabled = comment === "" || isSending;
@@ -78,6 +89,13 @@ function AddComment({ onAddComment }) {
       >
         {isSending ? <Spinner /> : "Add Comment"}
       </button>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={handleErrorModalClose}
+          ref={errorModalRef}
+        />
+      )}
     </article>
   );
 }
