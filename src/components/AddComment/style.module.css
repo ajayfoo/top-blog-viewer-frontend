@@ -18,6 +18,7 @@
   background-color: var(--surface-container-high);
   border: 1px solid var(--outline-variant);
   color: var(--secondary);
+  resize: vertical;
 }
 .comment-textarea:focus {
   outline: none;
@@ -36,12 +37,6 @@
   border: none;
   padding: var(--size-1) var(--size-2);
   border-radius: var(--size-1);
-  cursor: pointer;
-}
-
-.add-button:disabled {
-  filter: brightness(70%);
-  cursor: unset;
 }
 
 .add-button-spinning {

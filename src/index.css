@@ -148,12 +148,26 @@ button {
   font-family: inherit;
   font-size: inherit;
 }
-button:disabled {
-  filter: brightness(70%);
+@media screen and (prefers-color-scheme: dark) {
+  button:disabled {
+    filter: brightness(70%);
+  }
+  button:hover:enabled {
+    filter: brightness(110%);
+  }
+  button:active:enabled {
+    filter: brightness(120%);
+  }
 }
-button:hover:enabled {
-  filter: brightness(110%);
-}
-button:active:enabled {
-  filter: brightness(120%);
+
+@media screen and (prefers-color-scheme: light) {
+  button:disabled {
+    filter: brightness(130%);
+  }
+  button:hover:enabled {
+    filter: brightness(95%);
+  }
+  button:active:enabled {
+    filter: brightness(90%);
+  }
 }

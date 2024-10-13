@@ -18,16 +18,15 @@
   background-color: var(--surface-container-high);
   border: 1px solid var(--outline-variant);
   color: var(--secondary);
+  resize: vertical;
+  font-family: inherit;
+  font-size: inherit;
 }
 .comment-textarea:focus {
   outline: none;
   border-color: var(--outline);
 }
 
-.comment-textarea {
-  font-family: inherit;
-  font-size: inherit;
-}
 .add-button,
 .cancel-button {
   border: none;
