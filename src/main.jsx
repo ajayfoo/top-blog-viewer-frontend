@@ -5,6 +5,7 @@ import PostPage from "./components/PostPage";
 import HomePage from "./components/HomePage/index.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import AccountPage from "./components/AccountPage/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +17,17 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/:postId",
-        element: <PostPage />,
+        path: "/account",
+        element: <AccountPage />,
+      },
+      {
+        path: "/posts",
+        children: [
+          {
+            path: "/posts/:postId",
+            element: <PostPage />,
+          },
+        ],
       },
     ],
   },

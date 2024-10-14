@@ -11,6 +11,12 @@ function MainNav() {
         >
           Home
         </NavLink>
+        <NavLink
+          to="/account"
+          className={({ isActive }) => (isActive ? classes.active : "")}
+        >
+          Account
+        </NavLink>
       </div>
     </nav>
   );

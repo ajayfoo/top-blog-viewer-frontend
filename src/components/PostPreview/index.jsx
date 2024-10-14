@@ -6,7 +6,7 @@ import { format } from "date-fns";
 function PostPreview({ post }) {
   const updatedAt = format(post.updatedAt, "d MMM yyyy");
   return (
-    <Link className={classes["post-link"]} to={"/" + post.id}>
+    <Link className={classes["post-link"]} to={"/posts/" + post.id}>
       <article className={classes["post-preview"]}>
         <p>{updatedAt}</p>
         <div className={classes.content}>
