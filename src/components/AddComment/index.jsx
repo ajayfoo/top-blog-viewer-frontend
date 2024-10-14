@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import classes from "./style.module.css";
-import { useLocalStorage } from "../../hooks";
 import Spinner from "../Spinner";
 import { useParams } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
@@ -23,16 +22,28 @@ const postComment = async (postId, comment, auth) => {
 function AddComment({ onAddComment }) {
   const { postId } = useParams();
   const [comment, setComment] = useState("");
-  const username = useLocalStorage("username");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);
+
+  useEffect(() => {
+    if (!error) return;
+    errorModalRef.current.showModal();
+  }, [error]);
+
+  const handleErrorModalClose = () => {
+    errorModalRef.current.close();
+    setError(null);
+  };
+
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
+
   const handleAddCommentClick = async () => {
     if (comment === "") return;
     const auth = localStorage.getItem("auth");
+    const username = localStorage.getItem("username");
     setIsSending(true);
     try {
       const res = await postComment(postId, comment, auth);
@@ -55,20 +66,14 @@ function AddComment({ onAddComment }) {
       setIsSending(false);
     }
   };
-  useEffect(() => {
-    if (!error) return;
-    errorModalRef.current.showModal();
-  }, [error]);
-  const handleErrorModalClose = () => {
-    errorModalRef.current.close();
-    setError(null);
-  };
+
   const textareaId = "add-comment-textarea";
   const buttonIsDisabled = comment === "" || isSending;
+
   return (
     <article className={classes["add-comment"]}>
       <section className={classes.field}>
-        <label htmlFor={textareaId}>{username}</label>
+        <label htmlFor={textareaId}>Add a comment</label>
         <textarea
           id={textareaId}
           onChange={handleCommentChange}
