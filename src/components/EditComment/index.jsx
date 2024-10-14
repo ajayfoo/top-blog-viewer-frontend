@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./style.module.css";
 import { useLocalStorage } from "../../hooks";
 import Spinner from "../Spinner";
 import { useParams } from "react-router-dom";
+import ErrorModal from "../ErrorModal";
 
 const sendPatchCommentRequest = async (postId, id, content) => {
   const auth = localStorage.getItem("auth");
@@ -26,9 +27,23 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
   const [content, setContent] = useState(initialComment.content);
   const username = useLocalStorage("username");
   const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState(null);
+  const errorModalRef = useRef(null);
+
+  useEffect(() => {
+    if (!error) return;
+    errorModalRef.current.showModal();
+  }, [error]);
+
   const handleCommentChange = (e) => {
     setContent(e.target.value);
   };
+
+  const handleErrorModalClose = () => {
+    errorModalRef.current.close();
+    setError(null);
+  };
+
   const handleUpdateClick = async () => {
     if (content === "") return;
     setIsSending(true);
@@ -39,8 +54,7 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
         content
       );
       if (!res.ok) {
-        console.error("Something went wrong");
-        return;
+        throw new Error(res.status + ": " + res.statusText);
       }
       const resJson = await res.json();
       const updatedComment = {
@@ -52,6 +66,7 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
       onCancel();
     } catch (err) {
       console.error(err);
+      setError("Failed to update comment!");
     } finally {
       setIsSending(false);
     }
@@ -94,6 +109,13 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
           {isSending ? <Spinner /> : "Update"}
         </button>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={handleErrorModalClose}
+          ref={errorModalRef}
+        />
+      )}
     </article>
   );
 }

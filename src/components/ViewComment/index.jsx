@@ -7,6 +7,7 @@ import { useLocalStorage } from "../../hooks";
 import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "../ConfirmModal";
 import { useParams } from "react-router-dom";
+import ErrorModal from "../ErrorModal";
 
 const deleteComment = async (postId, id) => {
   const auth = localStorage.getItem("auth");
@@ -25,33 +26,50 @@ const deleteComment = async (postId, id) => {
 function ViewComment({ comment, onClickEdit, onDeleteComment }) {
   const { postId } = useParams();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const modalRef = useRef(null);
-  useEffect(() => {
-    if (!showDeleteModal) return;
-    modalRef.current.showModal();
-  }, [showDeleteModal]);
+  const confirmModalRef = useRef(null);
+  const [error, setError] = useState(null);
+  const errorModalRef = useRef(null);
   const timeElapsed = getElapsedTime(comment.updatedAt);
   const username = useLocalStorage("username");
+
+  useEffect(() => {
+    if (!showDeleteModal) return;
+    confirmModalRef.current.showModal();
+  }, [showDeleteModal]);
+
+  useEffect(() => {
+    if (!error) return;
+    errorModalRef.current.showModal();
+  }, [error]);
+
+  const handleErrorModalClose = () => {
+    errorModalRef.current.close();
+    setError(null);
+  };
+
   const handleCloseModal = () => {
-    modalRef.current.close();
+    confirmModalRef.current.close();
     setShowDeleteModal(false);
   };
+
   const handleConfirmDelete = async () => {
     try {
       const res = await deleteComment(postId, comment.id);
       if (!res.ok) {
-        console.error("Something went wrong");
-        return;
+        throw new Error(res.status + ": " + res.statusText);
       }
       onDeleteComment(comment.id);
       handleCloseModal();
     } catch (err) {
       console.error(err);
+      setError("Failed to delete comment!");
     }
   };
+
   const handleDeleteClick = () => {
     setShowDeleteModal(true);
   };
+
   return (
     <article className={classes.comment}>
       <header>
@@ -94,7 +112,14 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
           message="Are you sure you want to delete the comment?"
           onCancel={handleCloseModal}
           onConfirm={handleConfirmDelete}
-          ref={modalRef}
+          ref={confirmModalRef}
+        />
+      )}
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={handleErrorModalClose}
+          ref={errorModalRef}
         />
       )}
     </article>

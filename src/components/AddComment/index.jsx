@@ -49,7 +49,7 @@ function AddComment({ onAddComment }) {
       onAddComment(newComment);
     } catch (err) {
       console.error(err);
-      setError("Add comment request failed!");
+      setError("Failed to add comment!");
     } finally {
       setComment("");
       setIsSending(false);
