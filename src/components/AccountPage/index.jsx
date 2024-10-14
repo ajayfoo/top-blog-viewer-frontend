@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import classes from "./style.module.css";
 import ConfirmModal from "../ConfirmModal";
+import { useLocalStorage } from "../../hooks.jsx";
 
 function AccountPage() {
+  const username = useLocalStorage("username");
   const confirmModalRef = useRef(null);
   const handleConfirmModalCancel = () => {
     confirmModalRef.current.close();
@@ -14,7 +16,12 @@ function AccountPage() {
 
   return (
     <main className={classes["account-page"]}>
-      <button type="button" onClick={showConfirmModal}>
+      <h1 className={classes.username}>{username}</h1>
+      <button
+        className={classes["logout-button"]}
+        type="button"
+        onClick={showConfirmModal}
+      >
         Logout
       </button>
       <ConfirmModal

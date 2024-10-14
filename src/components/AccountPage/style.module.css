@@ -1,2 +1,16 @@
 .account-page {
+  margin-inline: var(--size-2);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--size-1);
+  align-items: center;
+}
+
+.logout-button {
+  background-color: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+  border: none;
+  border-radius: var(--size-1);
+  padding: var(--size-1) var(--size-2);
+  justify-self: flex-start;
 }
