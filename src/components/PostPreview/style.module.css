@@ -4,7 +4,7 @@
   flex-direction: column;
   gap: var(--size-2);
   border-radius: var(--size-3);
-  background-color: var(--surface-container);
+  background-color: var(--surface-container-low);
 }
 
 .post-preview:hover {
