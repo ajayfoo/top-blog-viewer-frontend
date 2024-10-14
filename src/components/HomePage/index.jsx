@@ -4,14 +4,11 @@ import classes from "./style.module.css";
 
 function HomePage() {
   const { postsMap } = useOutletContext();
-  if (postsMap) {
-    const postPreviews = [];
-    for (const post of postsMap.values()) {
-      postPreviews.push(<PostPreview key={post.id} post={post} />);
-    }
-    return <main className={classes["home-page"]}>{postPreviews}</main>;
+  const postPreviews = [];
+  for (const post of postsMap.values()) {
+    postPreviews.push(<PostPreview key={post.id} post={post} />);
   }
-  return null;
+  return <main className={classes["home-page"]}>{postPreviews}</main>;
 }
 
 export default HomePage;
