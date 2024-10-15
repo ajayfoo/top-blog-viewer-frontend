@@ -2,14 +2,26 @@ import { useRef } from "react";
 import classes from "./style.module.css";
 import ConfirmModal from "../ConfirmModal";
 import { useUsername } from "../../hooks.jsx";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function AccountPage() {
   const username = useUsername();
   const confirmModalRef = useRef(null);
+  const navigate = useNavigate();
+
+  if (!username) {
+    return <Navigate to="/auth/login" />;
+  }
+
   const handleConfirmModalCancel = () => {
     confirmModalRef.current.close();
   };
-  const handleConfirmModalConfirm = () => {};
+
+  const handleConfirmModalConfirm = () => {
+    localStorage.removeItem("auth");
+    navigate("/auth/login");
+  };
+
   const showConfirmModal = () => {
     confirmModalRef.current.showModal();
   };

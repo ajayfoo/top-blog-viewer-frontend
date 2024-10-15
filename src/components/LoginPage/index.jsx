@@ -43,7 +43,7 @@ PasswordField.propTypes = {
   onChange: PropTypes.func,
 };
 
-function LoginPage() {
+function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -86,6 +86,10 @@ function LoginPage() {
       </form>
     </main>
   );
+}
+
+function LoginPage() {
+  return <LoginForm />;
 }
 
 export default LoginPage;
