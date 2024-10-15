@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import classes from "./style.module.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function UsernameField({ value, onChange }) {
   return (
@@ -82,7 +82,12 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className={classes.form}>
         <UsernameField value={username} onChange={handleUsernameChange} />
         <PasswordField value={password} onChange={handlePasswordChange} />
-        <button className={classes.login}>Login</button>
+        <div className={classes["action-buttons"]}>
+          <button className={classes.login}>Login</button>
+          <Link className={classes["sign-up"]} to="/auth/sign-up">
+            Sign Up
+          </Link>
+        </div>
       </form>
     </main>
   );

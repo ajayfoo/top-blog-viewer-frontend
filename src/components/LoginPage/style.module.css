@@ -37,8 +37,20 @@
 
 .login {
   justify-self: center;
-  margin-block-start: var(--size-2);
   background-color: var(--primary);
   color: var(--on-primary);
   border: none;
+}
+
+.action-buttons {
+  margin-block-start: var(--size-2);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.sign-up {
+  color: var(--secondary);
+}
+.sign-up:hover {
+  text-decoration: none;
 }
