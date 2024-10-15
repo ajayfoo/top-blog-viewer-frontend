@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import classes from "./style.module.css";
-import { useLocalStorage } from "../../hooks";
+import { useUsername } from "../../hooks";
 import Spinner from "../Spinner";
 import { useParams } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
@@ -25,7 +25,7 @@ const sendPatchCommentRequest = async (postId, id, content) => {
 function EditComment({ onUpdateComment, initialComment, onCancel }) {
   const { postId } = useParams();
   const [content, setContent] = useState(initialComment.content);
-  const username = useLocalStorage("username");
+  const username = useUsername();
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);

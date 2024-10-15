@@ -3,7 +3,7 @@ import { getElapsedTime } from "../../utils";
 import classes from "./style.module.css";
 import PencilIconSrc from "/pencil.svg";
 import DustbinIconSrc from "/dustbin.svg";
-import { useLocalStorage } from "../../hooks";
+import { useUsername } from "../../hooks";
 import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "../ConfirmModal";
 import { useParams } from "react-router-dom";
@@ -30,7 +30,7 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);
   const timeElapsed = getElapsedTime(comment.updatedAt);
-  const username = useLocalStorage("username");
+  const username = useUsername();
 
   useEffect(() => {
     if (!showDeleteModal) return;

@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import classes from "./style.module.css";
 import ConfirmModal from "../ConfirmModal";
-import { useLocalStorage } from "../../hooks.jsx";
+import { useUsername } from "../../hooks.jsx";
 
 function AccountPage() {
-  const username = useLocalStorage("username");
+  const username = useUsername();
   const confirmModalRef = useRef(null);
   const handleConfirmModalCancel = () => {
     confirmModalRef.current.close();
