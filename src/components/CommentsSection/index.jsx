@@ -3,7 +3,7 @@ import Comment from "../Comment";
 import classes from "./style.module.css";
 import AddComment from "../AddComment";
 import DummyAddComment from "../DummyAddComment";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function CommentsSection() {
   const { postId } = useParams();
@@ -38,7 +38,12 @@ function CommentsSection() {
           {username ? (
             <AddComment onAddComment={handleAddComment} />
           ) : (
-            <DummyAddComment />
+            <Link
+              to="/auth/login"
+              className={classes["dummy-add-comment-wrapper"]}
+            >
+              <DummyAddComment />
+            </Link>
           )}
           {comments.map((c) => (
             <Comment

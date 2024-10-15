@@ -26,6 +26,9 @@
   outline: none;
   border-color: var(--outline);
 }
+.comment-textarea::placeholder {
+  color: var(--on-surface-variant);
+}
 
 .add-button,
 .cancel-button {

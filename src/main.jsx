@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import PostPage from "./components/PostPage";
+import LoginPage from "./components/LoginPage";
 import HomePage from "./components/HomePage/index.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/auth/login",
+    element: <LoginPage />,
   },
 ]);
 createRoot(document.getElementById("root")).render(

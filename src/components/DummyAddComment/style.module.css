@@ -1,8 +1,6 @@
 .dummy-add-comment {
   display: grid;
-  justify-content: flex-start;
   padding: var(--size-2);
-  max-inline-size: fit-content;
   background-color: var(--surface-container-high);
   border-radius: var(--size-2);
 }
@@ -12,17 +10,13 @@
   gap: var(--size-1);
 }
 .dummy-comment-textarea {
+  min-block-size: 3lh;
   padding: var(--size-2);
   margin-block-end: var(--size-2);
   border-radius: var(--size-2);
   background-color: var(--surface-container-high);
   border: 1px solid var(--outline-variant);
-  color: var(--secondary);
-  resize: vertical;
-}
-.dummy-comment-textarea:focus {
-  outline: none;
-  border-color: var(--outline);
+  color: var(--on-surface-variant);
 }
 
 .dummy-comment-textarea,
@@ -37,4 +31,16 @@
   border: none;
   padding: var(--size-1) var(--size-2);
   border-radius: var(--size-1);
+  filter: brightness(70%);
+}
+@media screen and (prefers-color-scheme: light) {
+  .add-button {
+    filter: brightness(130%);
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .add-button {
+    filter: brightness(70%);
+  }
 }

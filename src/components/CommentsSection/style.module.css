@@ -10,3 +10,11 @@
   display: grid;
   gap: var(--size-1);
 }
+.dummy-add-comment-wrapper {
+  text-decoration: none;
+  color: unset;
+}
+
+.dummy-add-comment-wrapper * {
+  cursor: unset;
+}
