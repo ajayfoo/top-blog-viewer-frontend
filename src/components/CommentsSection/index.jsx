@@ -1,11 +1,13 @@
-import { useComments } from "../../hooks";
+import { useComments, useUsername } from "../../hooks";
 import Comment from "../Comment";
 import classes from "./style.module.css";
 import AddComment from "../AddComment";
+import DummyAddComment from "../DummyAddComment";
 import { useParams } from "react-router-dom";
 
 function CommentsSection() {
   const { postId } = useParams();
+  const username = useUsername();
   const [comments, setComments] = useComments(postId);
   const handleAddComment = (newComment) => {
     setComments([newComment, ...comments]);
@@ -33,7 +35,11 @@ function CommentsSection() {
       <h2 className={classes.heading}>Comments</h2>
       {comments && (
         <div className={classes["comment-items"]}>
-          <AddComment onAddComment={handleAddComment} />
+          {username ? (
+            <AddComment onAddComment={handleAddComment} />
+          ) : (
+            <DummyAddComment />
+          )}
           {comments.map((c) => (
             <Comment
               key={c.id}

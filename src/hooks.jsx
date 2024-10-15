@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useContext, useEffect, useState, useSyncExternalStore } from "react";
+import { UserAccountContext } from "./contexts/UserAccountContext";
 
 const useFetchData = (url) => {
   const [data, setData] = useState(null);
@@ -67,4 +68,50 @@ const useLocalStorage = (key) => {
   return value;
 };
 
-export { usePostsMap, useComments, useLocalStorage };
+const useFetchUsername = () => {
+  const [username, setUsername] = useState(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    const fetchAuthenticationStatusAndSetIt = async () => {
+      const url = import.meta.env.VITE_API_URL + "/usernames";
+      const auth = localStorage.getItem("auth");
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: auth,
+          },
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          setUsername(null);
+          return;
+        }
+        const username = await res.text();
+        setUsername(username);
+      } catch (err) {
+        if (err.name === "AbortError") return;
+        console.error(err);
+        return;
+      }
+    };
+    fetchAuthenticationStatusAndSetIt();
+    return () => {
+      controller.abort();
+    };
+  }, []);
+  return username;
+};
+
+const useUsername = () => {
+  const { username } = useContext(UserAccountContext);
+  return username;
+};
+
+export {
+  usePostsMap,
+  useComments,
+  useLocalStorage,
+  useFetchUsername,
+  useUsername,
+};
