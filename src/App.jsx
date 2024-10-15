@@ -12,7 +12,13 @@ function App() {
     <div className={classes.app}>
       <MainNav />
       <UserAccountContext.Provider value={{ username }}>
-        {postsMap ? <Outlet context={{ postsMap }} /> : <Spinner />}
+        {postsMap ? (
+          <Outlet context={{ postsMap }} />
+        ) : (
+          <div className={classes.center}>
+            <Spinner />
+          </div>
+        )}
       </UserAccountContext.Provider>
     </div>
   );

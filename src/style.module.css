@@ -3,11 +3,13 @@
   margin-block-start: var(--main-nav-top-gap);
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--size-2);
 }
 
 .app > :first-child {
   position: sticky;
   top: var(--main-nav-top-gap);
+}
+.center {
+  align-self: center;
 }
