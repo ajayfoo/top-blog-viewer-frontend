@@ -64,3 +64,9 @@
 .disabled-sign-up {
   filter: var(--disabled-filter);
 }
+
+.invalid-cred-msg {
+  font-size: small;
+  color: var(--error);
+  text-align: center;
+}
