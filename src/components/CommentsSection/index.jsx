@@ -36,7 +36,7 @@ function CommentsSection() {
       {comments && (
         <div className={classes["comment-items"]}>
           {username ? (
-            <AddComment onAddComment={handleAddComment} />
+            <AddComment username={username} onAddComment={handleAddComment} />
           ) : (
             <Link
               to="/auth/login"

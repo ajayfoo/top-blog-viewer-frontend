@@ -19,7 +19,7 @@ const postComment = async (postId, comment, auth) => {
   return res;
 };
 
-function AddComment({ onAddComment }) {
+function AddComment({ username, onAddComment }) {
   const { postId } = useParams();
   const [comment, setComment] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -43,7 +43,6 @@ function AddComment({ onAddComment }) {
   const handleAddCommentClick = async () => {
     if (comment === "") return;
     const auth = localStorage.getItem("auth");
-    const username = localStorage.getItem("username");
     setIsSending(true);
     try {
       const res = await postComment(postId, comment, auth);
@@ -106,6 +105,7 @@ function AddComment({ onAddComment }) {
 }
 
 AddComment.propTypes = {
+  username: PropTypes.string,
   onAddComment: PropTypes.func,
 };
 
