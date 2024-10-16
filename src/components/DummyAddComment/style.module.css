@@ -31,16 +31,5 @@
   border: none;
   padding: var(--size-1) var(--size-2);
   border-radius: var(--size-1);
-  filter: brightness(70%);
-}
-@media screen and (prefers-color-scheme: light) {
-  .add-button {
-    filter: brightness(130%);
-  }
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .add-button {
-    filter: brightness(70%);
-  }
+  filter: var(--disabled-filter);
 }

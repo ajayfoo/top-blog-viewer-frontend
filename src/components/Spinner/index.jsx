@@ -1,7 +1,12 @@
+import PropTypes from "prop-types";
 import classes from "./style.module.css";
-function Spinner() {
+function Spinner({ className = "" }) {
   return (
-    <div role="alert" aria-busy={true} className={classes.spinner}>
+    <div
+      role="alert"
+      aria-busy={true}
+      className={`${classes.spinner} ${className}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -25,5 +30,9 @@ function Spinner() {
     </div>
   );
 }
+
+Spinner.propTypes = {
+  className: PropTypes.string,
+};
 
 export default Spinner;

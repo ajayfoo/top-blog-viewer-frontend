@@ -19,7 +19,6 @@
   outline: none;
   border: 1px solid var(--outline);
 }
-
 .main {
   display: grid;
   place-content: center;
@@ -48,9 +47,20 @@
   justify-content: space-evenly;
   align-items: center;
 }
-.sign-up {
+.sign-up,
+.disabled-sign-up {
   color: var(--secondary);
 }
 .sign-up:hover {
   text-decoration: none;
+}
+
+.spinner > svg > g {
+  stroke: var(--on-primary);
+}
+
+.disabled,
+.field > input:disabled,
+.disabled-sign-up {
+  filter: var(--disabled-filter);
 }

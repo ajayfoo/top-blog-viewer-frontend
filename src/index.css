@@ -71,6 +71,7 @@
     --surface-container: rgb(243 238 224);
     --surface-container-high: rgb(237 232 218);
     --surface-container-highest: rgb(231 226 213);
+    --disabled-filter: brightness(120%);
   }
 }
 
@@ -125,6 +126,7 @@
     --surface-container: rgb(33 32 23);
     --surface-container-high: rgb(44 42 33);
     --surface-container-highest: rgb(55 53 44);
+    --disabled-filter: brightness(70%);
   }
 }
 
@@ -148,10 +150,11 @@ button {
   font-family: inherit;
   font-size: inherit;
 }
+button:disabled {
+  filter: var(--disabled-filter);
+}
+
 @media screen and (prefers-color-scheme: dark) {
-  button:disabled {
-    filter: brightness(70%);
-  }
   button:hover:enabled {
     filter: brightness(110%);
   }
@@ -161,9 +164,6 @@ button {
 }
 
 @media screen and (prefers-color-scheme: light) {
-  button:disabled {
-    filter: brightness(130%);
-  }
   button:hover:enabled {
     filter: brightness(95%);
   }
