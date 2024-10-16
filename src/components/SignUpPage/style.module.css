@@ -1,0 +1,72 @@
+.field {
+  display: grid;
+  justify-content: flex-start;
+  gap: var(--size-1);
+}
+.field > input {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+  border: 1px solid transparent;
+}
+.field > input,
+.login {
+  border-radius: var(--size-1);
+  padding: var(--size-1) var(--size-2);
+}
+.field > input:focus {
+  outline: none;
+  border: 1px solid var(--outline);
+}
+.main {
+  display: grid;
+  place-content: center;
+  min-block-size: 100vh;
+}
+
+.form {
+  background-color: var(--surface-container);
+  color: var(--on-surface-container);
+  padding: var(--size-3);
+  border-radius: var(--size-3);
+  display: grid;
+  gap: var(--size-2);
+}
+
+.login {
+  justify-self: center;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+}
+
+.action-buttons {
+  margin-block-start: var(--size-2);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.sign-up,
+.disabled-sign-up {
+  color: var(--secondary);
+}
+.sign-up:hover {
+  text-decoration: none;
+}
+
+.spinner > svg > g {
+  stroke: var(--on-primary);
+}
+
+.disabled,
+.field > input:disabled,
+.disabled-sign-up {
+  filter: var(--disabled-filter);
+}
+
+.invalid-cred-msg {
+  font-size: small;
+  color: var(--error);
+  text-align: center;
+}
