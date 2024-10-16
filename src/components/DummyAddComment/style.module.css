@@ -3,6 +3,7 @@
   padding: var(--size-2);
   background-color: var(--surface-container-high);
   border-radius: var(--size-2);
+  max-inline-size: max(230px, 40%);
 }
 
 .field {
