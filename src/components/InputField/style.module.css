@@ -1,0 +1,28 @@
+.field {
+  display: grid;
+  gap: var(--size-1);
+}
+.field > input {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+  border: 1px solid transparent;
+}
+.field > input {
+  border-radius: var(--size-1);
+  padding: var(--size-1) var(--size-2);
+}
+.field > input:focus {
+  outline: none;
+  border: 1px solid var(--outline);
+}
+
+.error {
+  color: var(--error);
+}
+
+.disabled,
+.field > input:disabled {
+  filter: var(--disabled-filter);
+}

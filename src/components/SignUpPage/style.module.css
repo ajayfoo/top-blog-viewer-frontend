@@ -1,22 +1,6 @@
-.field {
-  display: grid;
-  gap: var(--size-1);
-}
-.field > input {
-  font-family: inherit;
-  font-size: inherit;
-  background-color: var(--tertiary-container);
-  color: var(--on-tertiary-container);
-  border: 1px solid transparent;
-}
-.field > input,
 .login {
   border-radius: var(--size-1);
   padding: var(--size-1) var(--size-2);
-}
-.field > input:focus {
-  outline: none;
-  border: 1px solid var(--outline);
 }
 .main {
   display: grid;
@@ -32,9 +16,6 @@
   display: grid;
   gap: var(--size-2);
   max-inline-size: 32ch;
-}
-.error {
-  color: var(--error);
 }
 .login {
   justify-self: center;
@@ -61,14 +42,6 @@
   stroke: var(--on-primary);
 }
 
-.disabled,
-.field > input:disabled,
 .disabled-sign-up {
   filter: var(--disabled-filter);
-}
-
-.invalid-cred-msg {
-  font-size: small;
-  color: var(--error);
-  text-align: center;
 }

@@ -4,6 +4,8 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
 import signUpFormReducer from "./reducer.js";
+import InputField from "../InputField/index.jsx";
+import validator from "validator";
 
 const isAlphaNumericOrUnderscore = (str) => {
   let code, i, len;
@@ -22,8 +24,50 @@ const isAlphaNumericOrUnderscore = (str) => {
   return true;
 };
 
-const handleSubmitEvent = async (e, dispatch, state, navigate) => {
-  e.preventDefault();
+const updateUsernameValidationMsg = (value, setMsg) => {
+  if (value.length === 0) {
+    setMsg("Required");
+  } else if (value.length < 6 || value.length > 36) {
+    setMsg("Must be 6-36 characters long");
+  } else if (!isAlphaNumericOrUnderscore(value)) {
+    setMsg("Must contain only alphabets, numbers or underscore");
+  } else {
+    setMsg(null);
+  }
+};
+
+const updatePasswordValidationMsg = (value, setMsg) => {
+  if (value.length === 0) {
+    setMsg("Required");
+  } else if (value.length < 8) {
+    setMsg("Must be at least 8 characters long");
+  } else if (
+    !validator.isStrongPassword(value, {
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+  ) {
+    setMsg(
+      "Password must be strong and contain at least one uppercase letter, one lowercase letter, one number and one symbol from -#!$@£%^&*()_+|~=`{}[]:\";'<>?,./\\ "
+    );
+  } else {
+    setMsg(null);
+  }
+};
+
+const updateConfirmPasswordValidationMsg = (value, password, setMsg) => {
+  if (value.length === 0) {
+    setMsg("Required");
+  } else if (value !== password) {
+    setMsg("Password mismatch");
+  } else {
+    setMsg(null);
+  }
+};
+
+const handleSubmitEvent = async (dispatch, state, navigate) => {
   const { username, password, confirmPassword } = state;
   try {
     const url = import.meta.env.VITE_API_URL + "/auth/sign-up";
@@ -58,18 +102,6 @@ const handleSubmitEvent = async (e, dispatch, state, navigate) => {
   }
 };
 
-const updateUsernameError = (username, set) => {
-  if (username.length === 0) {
-    set("Required");
-  } else if (username.length < 6 || username.length > 36) {
-    set("Must be 6-36 characters long");
-  } else if (!isAlphaNumericOrUnderscore(username)) {
-    set("Must contain only alphabets, numbers or underscore");
-  } else {
-    set(null);
-  }
-};
-
 function SignUpForm() {
   const [state, dispatch] = useReducer(signUpFormReducer, {
     username: "",
@@ -78,8 +110,13 @@ function SignUpForm() {
     isSending: false,
     error: null,
   });
-  const [usernameError, setUsernameError] = useState(null);
-  const [showUsernameError, setShowUsernameError] = useState(false);
+  const [usernameValidationMsg, setUsernameValidationMsg] =
+    useState("Required");
+  const [passwordValidationMsg, setPasswordValidationMsg] =
+    useState("Required");
+  const [confirmPasswordValidationMsg, setConfirmPasswordValidationMsg] =
+    useState("Required");
+  const [formSubmitAttempted, setFormSubmitAttempted] = useState(false);
   const navigate = useNavigate();
   const errorModalRef = useRef(null);
 
@@ -95,114 +132,104 @@ function SignUpForm() {
     });
   };
 
-  const handleUsernameBlur = () => {
-    setShowUsernameError(true);
-  };
   const handleUsernameChange = (e) => {
-    const value = e.target.value;
+    const newValue = e.target.value;
+    updateUsernameValidationMsg(newValue, setUsernameValidationMsg);
     dispatch({
       type: "username_edited",
-      text: value,
+      text: newValue,
     });
-    updateUsernameError(value, setUsernameError);
   };
 
   const handlePasswordChange = (e) => {
+    const newValue = e.target.value;
     dispatch({
       type: "password_edited",
-      text: e.target.value,
+      text: newValue,
     });
+    updatePasswordValidationMsg(newValue, setPasswordValidationMsg);
+    updateConfirmPasswordValidationMsg(
+      state.confirmPassword,
+      newValue,
+      setConfirmPasswordValidationMsg
+    );
   };
 
   const handleConfirmPasswordChange = (e) => {
+    const newValue = e.target.value;
     dispatch({
       type: "confirm_password_edited",
-      text: e.target.value,
+      text: newValue,
     });
+    updateConfirmPasswordValidationMsg(
+      newValue,
+      state.password,
+      setConfirmPasswordValidationMsg
+    );
   };
 
   const handleSubmit = async (e) => {
-    await handleSubmitEvent(e, dispatch, state, navigate);
+    e.preventDefault();
+    setFormSubmitAttempted(true);
+    if (!e.target.checkValidity()) return;
+    await handleSubmitEvent(dispatch, state, navigate);
   };
 
   const disableAllFields = state.isSending;
   return (
-    <main className={classes.main}>
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <section className={classes.field}>
-          <label
-            className={disableAllFields ? classes.disabled : ""}
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <input
-            disabled={disableAllFields}
-            id="username"
-            required
-            autoComplete="username"
-            type="text"
-            value={state.username}
-            minLength={6}
-            maxLength={36}
-            onChange={handleUsernameChange}
-            onBlur={handleUsernameBlur}
-          />
-          {showUsernameError && (
-            <span className={classes.error}>{usernameError}</span>
-          )}
-        </section>
-        <section className={classes.field}>
-          <label
-            className={disableAllFields ? classes.disabled : ""}
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            disabled={disableAllFields}
-            autoComplete="new-password"
-            required
-            id="password"
-            type="password"
-            value={state.password}
-            onChange={handlePasswordChange}
-          />
-        </section>
-        <section className={classes.field}>
-          <label
-            className={disableAllFields ? classes.disabled : ""}
-            htmlFor="confirm-new-password"
-          >
-            Confirm Password
-          </label>
-          <input
-            autoComplete="new-password"
-            disabled={disableAllFields}
-            required
-            id="confirm-new-password"
-            type="password"
-            value={state.confirmPassword}
-            onChange={handleConfirmPasswordChange}
-          />
-        </section>
-        <div className={classes["action-buttons"]}>
-          <button disabled={disableAllFields} className={classes.login}>
-            {disableAllFields ? (
-              <Spinner className={classes["spinner"]} />
-            ) : (
-              "Sign Up"
-            )}
-          </button>
+    <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
+      <InputField
+        formSubmitAttempted={formSubmitAttempted}
+        value={state.username}
+        validationMsg={usernameValidationMsg}
+        onChange={handleUsernameChange}
+        disabled={disableAllFields}
+        displayName="Username"
+        id="sign-up-form-username"
+        minLength={6}
+        maxLength={36}
+        autoComplete="username"
+      />
+      <InputField
+        formSubmitAttempted={formSubmitAttempted}
+        value={state.password}
+        type="password"
+        validationMsg={passwordValidationMsg}
+        onChange={handlePasswordChange}
+        disabled={disableAllFields}
+        displayName="Password"
+        id="sign-up-form-password"
+        minLength={8}
+        maxLength={120}
+        autoComplete="new-password"
+      />
+      <InputField
+        formSubmitAttempted={formSubmitAttempted}
+        value={state.confirmPassword}
+        type="password"
+        validationMsg={confirmPasswordValidationMsg}
+        onChange={handleConfirmPasswordChange}
+        disabled={disableAllFields}
+        displayName="Confirm Password"
+        id="sign-up-form-confirm-password"
+        autoComplete="new-password"
+      />
+      <div className={classes["action-buttons"]}>
+        <button disabled={disableAllFields} className={classes.login}>
           {disableAllFields ? (
-            <span className={classes["disabled-sign-up"]}>Login</span>
+            <Spinner className={classes["spinner"]} />
           ) : (
-            <Link className={classes["sign-up"]} to="/auth/login">
-              Login
-            </Link>
+            "Sign Up"
           )}
-        </div>
-      </form>
+        </button>
+        {disableAllFields ? (
+          <span className={classes["disabled-sign-up"]}>Login</span>
+        ) : (
+          <Link className={classes["sign-up"]} to="/auth/login">
+            Login
+          </Link>
+        )}
+      </div>
       {state.error && (
         <ErrorModal
           message={state.error}
@@ -210,12 +237,16 @@ function SignUpForm() {
           ref={errorModalRef}
         />
       )}
-    </main>
+    </form>
   );
 }
 
 function SignUpPage() {
-  return <SignUpForm />;
+  return (
+    <main className={classes.main}>
+      <SignUpForm />
+    </main>
+  );
 }
 
 export default SignUpPage;
