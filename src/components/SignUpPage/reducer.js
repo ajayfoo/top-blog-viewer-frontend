@@ -1,9 +1,3 @@
-const defaultState = {
-  username: "",
-  password: "",
-  confirmPassword: "",
-};
-
 const signUpFormReducer = (state, action) => {
   switch (action.type) {
     case "username_edited": {
@@ -27,13 +21,13 @@ const signUpFormReducer = (state, action) => {
     case "sending": {
       return {
         ...state,
-        sending: true,
+        isSending: true,
       };
     }
     case "sent": {
       return {
         ...state,
-        sending: false,
+        isSending: false,
       };
     }
     case "errored": {

@@ -35,7 +35,8 @@ function InputField({
     setEdited(true);
     onChange(e);
   };
-  const dispalyValidationMessage = showValidationMsg || formSubmitAttempted;
+  const dispalyValidationMessage =
+    showValidationMsg || (formSubmitAttempted && validationMsg);
   return (
     <section className={classes.field}>
       <label className={disabled ? classes.disabled : ""} htmlFor={id}>
