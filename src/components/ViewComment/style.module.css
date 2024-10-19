@@ -41,22 +41,7 @@
   inline-size: 1em;
   block-size: 1em;
   justify-self: flex-end;
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .edit-icon,
-  .delete-icon {
-    filter: brightness(0) saturate(100%) invert(92%) sepia(16%) saturate(438%)
-      hue-rotate(87deg) brightness(87%) contrast(85%);
-  }
-}
-
-@media screen and (prefers-color-scheme: light) {
-  .edit-icon,
-  .delete-icon {
-    filter: brightness(0) saturate(100%) invert(31%) sepia(16%) saturate(948%)
-      hue-rotate(97deg) brightness(102%) contrast(79%);
-  }
+  fill: var(--tertiary);
 }
 
 .action-buttons {

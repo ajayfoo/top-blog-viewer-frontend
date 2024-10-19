@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { getElapsedTime } from "../../utils";
 import classes from "./style.module.css";
-import PencilIconSrc from "/pencil.svg";
-import DustbinIconSrc from "/dustbin.svg";
 import { useUsername } from "../../hooks";
 import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "../ConfirmModal";
 import { useParams } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
+import EditIcon from "../Icons/EditIcon";
+import DeleteIcon from "../Icons/DeleteIcon";
 
 const deleteComment = async (postId, id) => {
   const auth = localStorage.getItem("auth");
@@ -84,11 +84,7 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
               title="edit comment"
               aria-label="edit comment"
             >
-              <img
-                className={classes["edit-icon"]}
-                src={PencilIconSrc}
-                alt=""
-              />
+              <EditIcon className={classes["edit-icon"]} />
             </button>
             <button
               type="button"
@@ -97,11 +93,7 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
               title="delete comment"
               aria-label="delete comment"
             >
-              <img
-                className={classes["delete-icon"]}
-                src={DustbinIconSrc}
-                alt=""
-              />
+              <DeleteIcon className={classes["delete-icon"]} />
             </button>
           </div>
         )}

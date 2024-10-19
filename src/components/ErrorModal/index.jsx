@@ -1,13 +1,13 @@
 import { forwardRef } from "react";
-import ErrorIconSrc from "/error.svg";
 import classes from "./style.module.css";
 import PropTypes from "prop-types";
+import ErrorIcon from "../Icons/ErrorIcon";
 
 const ErrorModal = forwardRef(function ErrorModal({ message, onClose }, ref) {
   return (
     <dialog onClose={onClose} className={classes["error-modal"]} ref={ref}>
       <div className={classes.info}>
-        <img className={classes["error-icon"]} src={ErrorIconSrc} alt="" />
+        <ErrorIcon className={classes["error-icon"]} />
         <p className={classes.message}>{message}</p>
       </div>
       <button onClick={onClose} type="button">

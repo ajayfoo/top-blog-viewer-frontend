@@ -13,6 +13,7 @@
 .error-icon {
   inline-size: 2em;
   block-size: 2em;
+  fill: var(--on-error-container);
 }
 
 .message {
@@ -27,18 +28,4 @@
   padding: var(--size-1) var(--size-2);
   display: block;
   margin: 0 auto;
-}
-
-@media screen and (prefers-color-scheme: light) {
-  .error-icon {
-    filter: brightness(0) saturate(100%) invert(16%) sepia(43%) saturate(2891%)
-      hue-rotate(328deg) brightness(57%) contrast(120%);
-  }
-}
-
-@media screen and (prefers-color-scheme: dark) {
-  .error-icon {
-    filter: brightness(0) saturate(100%) invert(94%) sepia(66%) saturate(2412%)
-      hue-rotate(291deg) brightness(123%) contrast(103%);
-  }
 }
