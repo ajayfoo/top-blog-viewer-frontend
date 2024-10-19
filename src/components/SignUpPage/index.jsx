@@ -4,9 +4,9 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
 import signUpFormReducer from "./reducer.js";
-import InputField from "../InputField/index.jsx";
 import validator from "validator";
 import UsernameField from "./UsernameField/index.jsx";
+import PasswordField from "./PasswordField/index.jsx";
 
 const isAlphaNumericOrUnderscore = (str) => {
   let code, i, len;
@@ -185,29 +185,25 @@ function SignUpForm() {
         validationMsg={usernameValidationMsg}
         onChange={handleUsernameChange}
         disabled={disableAllFields}
-        displayName="Username"
         id="sign-up-form-username"
         minLength={6}
         maxLength={36}
         autoComplete="username"
       />
-      <InputField
+      <PasswordField
         formSubmitAttempted={formSubmitAttempted}
         value={state.password}
-        type="password"
         validationMsg={passwordValidationMsg}
         onChange={handlePasswordChange}
         disabled={disableAllFields}
-        displayName="Password"
         id="sign-up-form-password"
         minLength={8}
         maxLength={120}
         autoComplete="new-password"
       />
-      <InputField
+      <PasswordField
         formSubmitAttempted={formSubmitAttempted}
         value={state.confirmPassword}
-        type="password"
         validationMsg={confirmPasswordValidationMsg}
         onChange={handleConfirmPasswordChange}
         disabled={disableAllFields}
