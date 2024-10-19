@@ -6,6 +6,7 @@ import ErrorModal from "../ErrorModal";
 import signUpFormReducer from "./reducer.js";
 import InputField from "../InputField/index.jsx";
 import validator from "validator";
+import UsernameField from "./UsernameField/index.jsx";
 
 const isAlphaNumericOrUnderscore = (str) => {
   let code, i, len;
@@ -178,7 +179,7 @@ function SignUpForm() {
   const disableAllFields = state.isSending;
   return (
     <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
-      <InputField
+      <UsernameField
         formSubmitAttempted={formSubmitAttempted}
         value={state.username}
         validationMsg={usernameValidationMsg}
