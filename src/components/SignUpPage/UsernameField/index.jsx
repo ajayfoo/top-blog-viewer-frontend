@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import classes from "./style.module.css";
 import Spinner from "../../Spinner";
+import TickIcon from "../../Icons/TickIcon";
+import CloseIcon from "../../Icons/CloseIcon";
 
 const usernameIsAvailable = async (username, signal) => {
   try {
@@ -16,6 +18,20 @@ const usernameIsAvailable = async (username, signal) => {
     return res.ok;
   } catch {
     return false;
+  }
+};
+
+const getAvailabilityIconFor = (availability) => {
+  const { CHECKING, AVAILABLE, UNAVAILABLE } = UsernameAvailability;
+  switch (availability) {
+    case AVAILABLE:
+      return <TickIcon className={classes.available} />;
+    case UNAVAILABLE:
+      return <CloseIcon className={classes.unavailable} />;
+    case CHECKING:
+      return <Spinner className={classes.spinner} />;
+    default:
+      return null;
   }
 };
 
@@ -53,6 +69,10 @@ function UsernameField({
   }, [validationMsg]);
 
   useEffect(() => {
+    if (validationMsg) {
+      setAvailability(UsernameAvailability.UNDETERMINED);
+      return;
+    }
     const controller = new AbortController();
     const updateAvailability = async () => {
       try {
@@ -71,7 +91,7 @@ function UsernameField({
     return () => {
       controller.abort();
     };
-  }, [value]);
+  }, [value, validationMsg]);
 
   const handleBlur = () => {
     if (!edited) return;
@@ -85,6 +105,7 @@ function UsernameField({
 
   const dispalyValidationMessage =
     showValidationMsg || (formSubmitAttempted && validationMsg);
+  const availabilityIcon = getAvailabilityIconFor(availability);
   return (
     <section className={classes.field}>
       <label className={disabled ? classes.disabled : ""} htmlFor={id}>
@@ -103,9 +124,7 @@ function UsernameField({
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        {availability === UsernameAvailability.CHECKING && (
-          <Spinner className={classes.spinner} />
-        )}
+        {availabilityIcon}
       </div>
       {dispalyValidationMessage && (
         <span className={classes.error}>{validationMsg}</span>

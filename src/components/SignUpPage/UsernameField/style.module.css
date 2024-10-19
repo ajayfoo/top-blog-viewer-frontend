@@ -45,3 +45,20 @@
 .spinner > svg > g {
   stroke: var(--on-tertiary-container);
 }
+
+.available,
+.unavailable {
+  align-self: center;
+}
+
+.available {
+  inline-size: 1.5em;
+  block-size: 1.5em;
+  fill: var(--primary);
+}
+
+.unavailable {
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  fill: var(--error);
+}
