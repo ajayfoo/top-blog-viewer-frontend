@@ -62,3 +62,7 @@
   block-size: 1.25em;
   fill: var(--error);
 }
+
+.error-border-color {
+  border-color: var(--error);
+}

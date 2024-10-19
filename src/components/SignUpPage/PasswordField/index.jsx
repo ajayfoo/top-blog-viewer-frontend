@@ -60,7 +60,9 @@ function PasswordField({
       <label className={disabled ? classes.disabled : ""} htmlFor={id}>
         {displayName}
       </label>
-      <div className={classes["input-wrapper"]}>
+      <div
+        className={`${classes["input-wrapper"]} ${dispalyValidationMessage ? classes["error-border-color"] : ""}`}
+      >
         <input
           ref={ref}
           disabled={disabled}
