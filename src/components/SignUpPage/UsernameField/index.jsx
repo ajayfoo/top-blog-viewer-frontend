@@ -63,6 +63,7 @@ function UsernameField({
   useEffect(() => {
     if (!validationMsg) {
       ref.current.setCustomValidity("");
+      setShowValidationMsg(false);
       return;
     }
     ref.current.setCustomValidity(validationMsg);

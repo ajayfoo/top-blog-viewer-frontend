@@ -19,7 +19,7 @@
   border: 1px solid transparent;
   border-radius: var(--size-1);
   display: flex;
-  padding-inline-end: var(--size-1);
+  padding-inline-end: var(--size-2);
 }
 
 .input-wrapper > input:focus {
