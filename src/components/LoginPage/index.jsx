@@ -1,65 +1,38 @@
-import PropTypes from "prop-types";
 import classes from "./style.module.css";
 import Spinner from "../Spinner";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
+import UsernameField from "./UsernameField";
+import PasswordField from "./PasswordField";
 
-function UsernameField({ value, onChange, disabled }) {
-  return (
-    <section className={classes.field}>
-      <label className={disabled ? classes.disabled : ""} htmlFor="username">
-        Username
-      </label>
-      <input
-        disabled={disabled}
-        id="username"
-        required
-        autoComplete="username"
-        type="text"
-        value={value}
-        onChange={onChange}
-      />
-    </section>
-  );
-}
-UsernameField.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool,
-};
-
-function PasswordField({ value, onChange, disabled }) {
-  return (
-    <section className={classes.field}>
-      <label className={disabled ? classes.disabled : ""} htmlFor="password">
-        Password
-      </label>
-      <input
-        disabled={disabled}
-        autoComplete="current-password"
-        required
-        id="password"
-        type="password"
-        value={value}
-        onChange={onChange}
-      />
-    </section>
-  );
-}
-PasswordField.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool,
+const sendLoginRequest = async (username, password) => {
+  const url = import.meta.env.VITE_API_URL + "/auth/login";
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+    mode: "cors",
+  });
+  return res;
 };
 
 function LoginForm() {
   const [username, setUsername] = useState("");
+  const [usernameValidationMsg, setUsernameValidationMsg] =
+    useState("Required");
+
   const [password, setPassword] = useState("");
+  const [passwordValidationMsg, setPasswordValidationMsg] =
+    useState("Required");
+
   const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isInvalidCred, setIsInvalidCred] = useState(false);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
   const errorModalRef = useRef(null);
 
   useEffect(() => {
@@ -73,26 +46,33 @@ function LoginForm() {
   };
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    const newValue = e.target.value;
+    setUsername(newValue);
+    if (newValue.length === 0) {
+      setUsernameValidationMsg("Required");
+      return;
+    }
+    setUsernameValidationMsg(null);
   };
+
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    const newValue = e.target.value;
+    setPassword(newValue);
+    if (newValue.length === 0) {
+      setPasswordValidationMsg("Required");
+      return;
+    }
+    setPasswordValidationMsg(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitAttempted(true);
+    if (!e.target.checkValidity()) return;
     try {
-      const url = import.meta.env.VITE_API_URL + "/auth/login";
       setIsSending(true);
       setIsInvalidCred(false);
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-        mode: "cors",
-      });
+      const res = await sendLoginRequest(username, password);
       if (res.status === 401) {
         setIsInvalidCred(true);
         return;
@@ -100,11 +80,10 @@ function LoginForm() {
       if (!res.ok) {
         throw new Error(res.status + ": " + res.statusText);
       }
-      setIsInvalidCred(false);
       const jwt = await res.text();
       const auth = "Bearer " + jwt;
-      navigate("/");
       localStorage.setItem("auth", auth);
+      navigate("/");
     } catch (err) {
       console.error(err);
       setError("Something went wrong");
@@ -114,16 +93,20 @@ function LoginForm() {
   };
   return (
     <main className={classes.main}>
-      <form onSubmit={handleSubmit} className={classes.form}>
+      <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
         <UsernameField
           disabled={isSending}
           value={username}
           onChange={handleUsernameChange}
+          validationMsg={usernameValidationMsg}
+          formSubmitAttempted={submitAttempted}
         />
         <PasswordField
           disabled={isSending}
           value={password}
           onChange={handlePasswordChange}
+          validationMsg={passwordValidationMsg}
+          formSubmitAttempted={submitAttempted}
         />
         {isInvalidCred && (
           <span className={classes["invalid-cred-msg"]}>
