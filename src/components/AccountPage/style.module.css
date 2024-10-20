@@ -14,3 +14,12 @@
   padding: var(--size-1) var(--size-2);
   justify-self: flex-start;
 }
+
+.spinner {
+  inline-size: unset;
+  display: flex;
+  justify-content: center;
+}
+.spinner > svg > g {
+  stroke: var(--on-surface);
+}

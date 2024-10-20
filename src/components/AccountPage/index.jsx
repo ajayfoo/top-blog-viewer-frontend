@@ -1,15 +1,20 @@
 import { useRef } from "react";
 import classes from "./style.module.css";
 import ConfirmModal from "../ConfirmModal";
-import { useUsername } from "../../hooks.jsx";
+import { useUser } from "../../hooks.jsx";
 import { Navigate, useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/index.jsx";
+import { UserStatus } from "../../utils";
 
 function AccountPage() {
-  const username = useUsername();
+  const user = useUser();
   const confirmModalRef = useRef(null);
   const navigate = useNavigate();
 
-  if (!username) {
+  if (user.status === UserStatus.CHECKING) {
+    return <Spinner className={classes.spinner} />;
+  }
+  if (user.status === UserStatus.UNAUTHORIZED) {
     return <Navigate to="/auth/login" />;
   }
 
@@ -28,7 +33,7 @@ function AccountPage() {
 
   return (
     <main className={classes["account-page"]}>
-      <h1 className={classes.username}>{username}</h1>
+      <h1 className={classes.username}>{user.username}</h1>
       <button
         className={classes["logout-button"]}
         type="button"

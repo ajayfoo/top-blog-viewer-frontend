@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import classes from "./style.module.css";
-import { useUsername } from "../../hooks";
+import { useUser } from "../../hooks";
 import Spinner from "../Spinner";
 import { useParams } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
@@ -25,7 +25,7 @@ const sendPatchCommentRequest = async (postId, id, content) => {
 function EditComment({ onUpdateComment, initialComment, onCancel }) {
   const { postId } = useParams();
   const [content, setContent] = useState(initialComment.content);
-  const username = useUsername();
+  const user = useUser();
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);
@@ -76,7 +76,7 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
   return (
     <article className={classes["add-comment"]}>
       <section className={classes.field}>
-        <label htmlFor={textareaId}>{username}</label>
+        <label htmlFor={textareaId}>{user.username}</label>
         <textarea
           id={textareaId}
           onChange={handleCommentChange}

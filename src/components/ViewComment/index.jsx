@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import { getElapsedTime } from "../../utils";
+import { getElapsedTime, UserStatus } from "../../utils";
 import classes from "./style.module.css";
-import { useUsername } from "../../hooks";
+import { useUser } from "../../hooks";
 import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "../ConfirmModal";
 import { useParams } from "react-router-dom";
@@ -30,7 +30,7 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);
   const timeElapsed = getElapsedTime(comment.updatedAt);
-  const username = useUsername();
+  const user = useUser();
 
   useEffect(() => {
     if (!showDeleteModal) return;
@@ -75,28 +75,29 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
       <header>
         <p className={classes.username}>{comment.user}</p>
         <p className={classes["time-elapsed"]}>{timeElapsed}</p>
-        {username === comment.user && (
-          <div className={classes["action-buttons"]}>
-            <button
-              type="button"
-              onClick={onClickEdit}
-              className={classes["edit-button"]}
-              title="edit comment"
-              aria-label="edit comment"
-            >
-              <EditIcon className={classes["edit-icon"]} />
-            </button>
-            <button
-              type="button"
-              onClick={handleDeleteClick}
-              className={classes["edit-button"]}
-              title="delete comment"
-              aria-label="delete comment"
-            >
-              <DeleteIcon className={classes["delete-icon"]} />
-            </button>
-          </div>
-        )}
+        {user.status === UserStatus.AUTHORIZED &&
+          user.username === comment.user && (
+            <div className={classes["action-buttons"]}>
+              <button
+                type="button"
+                onClick={onClickEdit}
+                className={classes["edit-button"]}
+                title="edit comment"
+                aria-label="edit comment"
+              >
+                <EditIcon className={classes["edit-icon"]} />
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteClick}
+                className={classes["edit-button"]}
+                title="delete comment"
+                aria-label="delete comment"
+              >
+                <DeleteIcon className={classes["delete-icon"]} />
+              </button>
+            </div>
+          )}
       </header>
       <p className={classes.content}>{comment.content}</p>
       {showDeleteModal && (

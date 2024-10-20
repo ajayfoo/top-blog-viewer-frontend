@@ -6,4 +6,10 @@ const getElapsedTime = (fromStr) => {
   return elapsedTime;
 };
 
-export { getElapsedTime };
+const UserStatus = {
+  CHECKING: "checking",
+  AUTHORIZED: "authorized",
+  UNAUTHORIZED: "unauthorized",
+};
+
+export { getElapsedTime, UserStatus };

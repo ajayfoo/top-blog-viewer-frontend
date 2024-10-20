@@ -1,20 +1,20 @@
 import { Outlet } from "react-router-dom";
-import { useFetchUsername, usePostsMap } from "./hooks";
+import { useFetchUser, usePostsMap } from "./hooks";
 import MainNav from "./components/MainNav";
 import classes from "./style.module.css";
 import Spinner from "./components/Spinner";
-import { UserAccountContext } from "./contexts/UserAccountContext";
+import { UserContext } from "./contexts";
 
 function App() {
   const postsMap = usePostsMap();
-  const username = useFetchUsername();
+  const user = useFetchUser();
   return (
     <div className={classes.app}>
       <MainNav />
       {postsMap ? (
-        <UserAccountContext.Provider value={{ username }}>
+        <UserContext.Provider value={user}>
           <Outlet context={{ postsMap }} />
-        </UserAccountContext.Provider>
+        </UserContext.Provider>
       ) : (
         <div className={classes.center}>
           <Spinner />

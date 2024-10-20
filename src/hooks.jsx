@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState, useSyncExternalStore } from "react";
-import { UserAccountContext } from "./contexts/UserAccountContext";
+import { UserContext } from "./contexts";
 
 const useFetchData = (url) => {
   const [data, setData] = useState(null);
@@ -103,9 +103,45 @@ const useFetchUsername = () => {
   return username;
 };
 
-const useUsername = () => {
-  const { username } = useContext(UserAccountContext);
-  return username;
+const useFetchUser = () => {
+  const [user, setUser] = useState({ status: "checking" });
+  useEffect(() => {
+    const controller = new AbortController();
+    const fetchUserAndSetIt = async () => {
+      const url = import.meta.env.VITE_API_URL + "/usernames";
+      const auth = localStorage.getItem("auth");
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: auth,
+          },
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          setUser({ status: "unauthorized" });
+          return;
+        }
+        const username = await res.text();
+        setUser({ status: "authorized", username });
+      } catch (err) {
+        if (err.name === "AbortError") return;
+        setUser({ status: "unauthorized" });
+        console.error(err);
+        return;
+      }
+    };
+    fetchUserAndSetIt();
+    return () => {
+      controller.abort();
+    };
+  }, []);
+  return user;
+};
+
+const useUser = () => {
+  const user = useContext(UserContext);
+  return user;
 };
 
 export {
@@ -113,5 +149,6 @@ export {
   useComments,
   useLocalStorage,
   useFetchUsername,
-  useUsername,
+  useFetchUser,
+  useUser,
 };

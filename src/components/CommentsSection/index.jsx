@@ -1,13 +1,14 @@
-import { useComments, useUsername } from "../../hooks";
+import { useComments, useUser } from "../../hooks";
 import Comment from "../Comment";
 import classes from "./style.module.css";
 import AddComment from "../AddComment";
 import DummyAddComment from "../DummyAddComment";
 import { Link, useParams } from "react-router-dom";
+import { UserStatus } from "../../utils";
 
 function CommentsSection() {
   const { postId } = useParams();
-  const username = useUsername();
+  const user = useUser();
   const [comments, setComments] = useComments(postId);
   const handleAddComment = (newComment) => {
     setComments([newComment, ...comments]);
@@ -35,8 +36,11 @@ function CommentsSection() {
       <h2 className={classes.heading}>Comments</h2>
       {comments && (
         <div className={classes["comment-items"]}>
-          {username ? (
-            <AddComment username={username} onAddComment={handleAddComment} />
+          {user.status === UserStatus.AUTHORIZED ? (
+            <AddComment
+              username={user.username}
+              onAddComment={handleAddComment}
+            />
           ) : (
             <Link
               to="/auth/login"
