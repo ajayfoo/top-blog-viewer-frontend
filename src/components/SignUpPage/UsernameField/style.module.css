@@ -1,43 +1,5 @@
-.field {
-  display: grid;
-  gap: var(--size-1);
-}
-.input-wrapper > input {
-  font-family: inherit;
-  font-size: inherit;
-  background-color: var(--tertiary-container);
-  color: var(--on-tertiary-container);
-  padding: var(--size-1) var(--size-2);
-  border-radius: var(--size-1);
-  border: none;
-  flex-grow: 1;
-}
+@import url("../field.css");
 
-.input-wrapper {
-  background-color: var(--tertiary-container);
-  border: 1px solid transparent;
-  border-radius: var(--size-1);
-  display: flex;
-  padding-inline-end: var(--size-2);
-}
-
-.input-wrapper > input:focus {
-  outline: none;
-}
-.input-wrapper:has(input:focus),
-.input-wrapper:has(.spinner:focus) {
-  border-color: var(--outline);
-}
-
-.error {
-  color: var(--error);
-  font-size: small;
-}
-
-.disabled,
-.field > input:disabled {
-  filter: var(--disabled-filter);
-}
 .spinner {
   block-size: fit-content;
   align-self: center;
