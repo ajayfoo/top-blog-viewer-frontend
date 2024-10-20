@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
 import UsernameField from "./UsernameField";
 import PasswordField from "./PasswordField";
+import GoToHome from "../GoToHome";
 
 const sendLoginRequest = async (username, password) => {
   const url = import.meta.env.VITE_API_URL + "/auth/login";
@@ -93,42 +94,38 @@ function LoginForm() {
   };
   const signUpLinkText = "Create an account";
   return (
-    <main className={classes.main}>
-      <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
-        <UsernameField
-          disabled={isSending}
-          value={username}
-          onChange={handleUsernameChange}
-          validationMsg={usernameValidationMsg}
-          formSubmitAttempted={submitAttempted}
-        />
-        <PasswordField
-          disabled={isSending}
-          value={password}
-          onChange={handlePasswordChange}
-          validationMsg={passwordValidationMsg}
-          formSubmitAttempted={submitAttempted}
-        />
-        {isInvalidCred && (
-          <span className={classes["invalid-cred-msg"]}>
-            Invalid username or password
-          </span>
+    <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
+      <UsernameField
+        disabled={isSending}
+        value={username}
+        onChange={handleUsernameChange}
+        validationMsg={usernameValidationMsg}
+        formSubmitAttempted={submitAttempted}
+      />
+      <PasswordField
+        disabled={isSending}
+        value={password}
+        onChange={handlePasswordChange}
+        validationMsg={passwordValidationMsg}
+        formSubmitAttempted={submitAttempted}
+      />
+      {isInvalidCred && (
+        <span className={classes["invalid-cred-msg"]}>
+          Invalid username or password
+        </span>
+      )}
+      <div className={classes["action-buttons"]}>
+        <button disabled={isSending} className={classes.login}>
+          {isSending ? <Spinner className={classes["spinner"]} /> : "Login"}
+        </button>
+        {isSending ? (
+          <span className={classes["disabled-sign-up"]}>{signUpLinkText}</span>
+        ) : (
+          <Link className={classes["sign-up"]} to="/auth/sign-up">
+            {signUpLinkText}
+          </Link>
         )}
-        <div className={classes["action-buttons"]}>
-          <button disabled={isSending} className={classes.login}>
-            {isSending ? <Spinner className={classes["spinner"]} /> : "Login"}
-          </button>
-          {isSending ? (
-            <span className={classes["disabled-sign-up"]}>
-              {signUpLinkText}
-            </span>
-          ) : (
-            <Link className={classes["sign-up"]} to="/auth/sign-up">
-              {signUpLinkText}
-            </Link>
-          )}
-        </div>
-      </form>
+      </div>
       {error && (
         <ErrorModal
           message={error}
@@ -136,12 +133,19 @@ function LoginForm() {
           ref={errorModalRef}
         />
       )}
-    </main>
+    </form>
   );
 }
 
 function LoginPage() {
-  return <LoginForm />;
+  return (
+    <main className={classes.main}>
+      <div className={classes.wrapper}>
+        <GoToHome />
+        <LoginForm />
+      </div>
+    </main>
+  );
 }
 
 export default LoginPage;

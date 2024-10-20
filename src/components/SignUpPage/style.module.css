@@ -8,6 +8,11 @@
   min-block-size: 100vh;
 }
 
+.wrapper {
+  background-color: var(--surface-container-low);
+  border-radius: var(--size-3);
+}
+
 .form {
   background-color: var(--surface-container);
   color: var(--on-surface);

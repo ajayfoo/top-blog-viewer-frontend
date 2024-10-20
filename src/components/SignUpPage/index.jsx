@@ -7,6 +7,7 @@ import signUpFormReducer from "./reducer.js";
 import validator from "validator";
 import UsernameField from "./UsernameField/index.jsx";
 import PasswordField from "./PasswordField/index.jsx";
+import GoToHome from "../GoToHome/index.jsx";
 
 const isAlphaNumericOrUnderscore = (str) => {
   let code, i, len;
@@ -242,7 +243,10 @@ function SignUpForm() {
 function SignUpPage() {
   return (
     <main className={classes.main}>
-      <SignUpForm />
+      <div className={classes.wrapper}>
+        <GoToHome />
+        <SignUpForm />
+      </div>
     </main>
   );
 }
