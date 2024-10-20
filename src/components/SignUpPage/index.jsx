@@ -176,6 +176,7 @@ function SignUpForm() {
     await handleSubmitEvent(dispatch, state, navigate);
   };
 
+  const loginLinkText = "I have an account";
   const disableAllFields = state.isSending;
   return (
     <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
@@ -220,10 +221,10 @@ function SignUpForm() {
           )}
         </button>
         {disableAllFields ? (
-          <span className={classes["disabled-sign-up"]}>Login</span>
+          <span className={classes["disabled-sign-up"]}>{loginLinkText}</span>
         ) : (
           <Link className={classes["sign-up"]} to="/auth/login">
-            Login
+            {loginLinkText}
           </Link>
         )}
       </div>

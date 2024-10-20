@@ -11,6 +11,7 @@
   border-radius: var(--size-3);
   display: grid;
   gap: var(--size-2);
+  inline-size: clamp(28ch, 35vw, 33ch);
 }
 
 .login {

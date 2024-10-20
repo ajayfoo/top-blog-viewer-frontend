@@ -91,6 +91,7 @@ function LoginForm() {
       setIsSending(false);
     }
   };
+  const signUpLinkText = "Create an account";
   return (
     <main className={classes.main}>
       <form noValidate={true} onSubmit={handleSubmit} className={classes.form}>
@@ -118,10 +119,12 @@ function LoginForm() {
             {isSending ? <Spinner className={classes["spinner"]} /> : "Login"}
           </button>
           {isSending ? (
-            <span className={classes["disabled-sign-up"]}>Sign Up</span>
+            <span className={classes["disabled-sign-up"]}>
+              {signUpLinkText}
+            </span>
           ) : (
             <Link className={classes["sign-up"]} to="/auth/sign-up">
-              Sign Up
+              {signUpLinkText}
             </Link>
           )}
         </div>
