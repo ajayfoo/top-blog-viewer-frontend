@@ -12,4 +12,27 @@ const UserStatus = {
   UNAUTHORIZED: "unauthorized",
 };
 
-export { getElapsedTime, UserStatus };
+const getUsernameIfAuthorizedElseNull = async (signal) => {
+  const url = import.meta.env.VITE_API_URL + "/usernames";
+  const auth = localStorage.getItem("auth");
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: auth,
+      },
+      signal,
+    });
+    if (!res.ok) {
+      return null;
+    }
+    const username = await res.text();
+    return username;
+  } catch (err) {
+    if (err.name === "AbortError") return;
+    console.error(err);
+    return null;
+  }
+};
+
+export { getElapsedTime, UserStatus, getUsernameIfAuthorizedElseNull };

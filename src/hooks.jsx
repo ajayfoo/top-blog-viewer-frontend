@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState, useSyncExternalStore } from "react";
 import { UserContext } from "./contexts";
+import { getUsernameIfAuthorizedElseNull, UserStatus } from "./utils";
 
 const useFetchData = (url) => {
   const [data, setData] = useState(null);
@@ -68,67 +69,16 @@ const useLocalStorage = (key) => {
   return value;
 };
 
-const useFetchUsername = () => {
-  const [username, setUsername] = useState(null);
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchAuthenticationStatusAndSetIt = async () => {
-      const url = import.meta.env.VITE_API_URL + "/usernames";
-      const auth = localStorage.getItem("auth");
-      try {
-        const res = await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: auth,
-          },
-          signal: controller.signal,
-        });
-        if (!res.ok) {
-          setUsername(null);
-          return;
-        }
-        const username = await res.text();
-        setUsername(username);
-      } catch (err) {
-        if (err.name === "AbortError") return;
-        console.error(err);
-        return;
-      }
-    };
-    fetchAuthenticationStatusAndSetIt();
-    return () => {
-      controller.abort();
-    };
-  }, []);
-  return username;
-};
-
 const useFetchUser = () => {
-  const [user, setUser] = useState({ status: "checking" });
+  const [user, setUser] = useState({ status: UserStatus.CHECKING });
   useEffect(() => {
     const controller = new AbortController();
     const fetchUserAndSetIt = async () => {
-      const url = import.meta.env.VITE_API_URL + "/usernames";
-      const auth = localStorage.getItem("auth");
-      try {
-        const res = await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: auth,
-          },
-          signal: controller.signal,
-        });
-        if (!res.ok) {
-          setUser({ status: "unauthorized" });
-          return;
-        }
-        const username = await res.text();
-        setUser({ status: "authorized", username });
-      } catch (err) {
-        if (err.name === "AbortError") return;
-        setUser({ status: "unauthorized" });
-        console.error(err);
-        return;
+      const username = await getUsernameIfAuthorizedElseNull(controller.signal);
+      if (username) {
+        setUser({ status: UserStatus.AUTHORIZED, username });
+      } else {
+        setUser({ status: UserStatus.UNAUTHORIZED });
       }
     };
     fetchUserAndSetIt();
@@ -144,11 +94,4 @@ const useUser = () => {
   return user;
 };
 
-export {
-  usePostsMap,
-  useComments,
-  useLocalStorage,
-  useFetchUsername,
-  useFetchUser,
-  useUser,
-};
+export { usePostsMap, useComments, useLocalStorage, useFetchUser, useUser };
