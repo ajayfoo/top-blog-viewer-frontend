@@ -55,11 +55,10 @@ function PasswordField({
   const eyeButtonLabel = (isHidden ? "show" : "hide") + " password";
   const type = isHidden ? "password" : "text";
 
+  const fieldClass = `${classes.field} ${disabled ? classes.disabled : ""}`;
   return (
-    <section className={classes.field}>
-      <label className={disabled ? classes.disabled : ""} htmlFor={id}>
-        {displayName}
-      </label>
+    <section className={fieldClass}>
+      <label htmlFor={id}>{displayName}</label>
       <div
         className={`${classes["input-wrapper"]} ${dispalyValidationMessage ? classes["error-border-color"] : ""}`}
       >

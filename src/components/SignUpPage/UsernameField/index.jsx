@@ -104,14 +104,13 @@ function UsernameField({
     onChange(e);
   };
 
+  const fieldClass = `${classes.field} ${disabled ? classes.disabled : ""}`;
   const dispalyValidationMessage =
     showValidationMsg || (formSubmitAttempted && validationMsg);
   const availabilityIcon = getAvailabilityIconFor(availability);
   return (
-    <section className={classes.field}>
-      <label className={disabled ? classes.disabled : ""} htmlFor={id}>
-        Username
-      </label>
+    <section className={fieldClass}>
+      <label htmlFor={id}>Username</label>
       <div
         className={`${classes["input-wrapper"]} ${dispalyValidationMessage ? classes["error-border-color"] : ""}`}
       >

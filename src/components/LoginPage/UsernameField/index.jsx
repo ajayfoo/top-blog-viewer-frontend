@@ -34,13 +34,11 @@ function UsernameField({
   const dispalyValidationMessage =
     showValidationMsg || (formSubmitAttempted && validationMsg);
 
-  const fieldClass = classes.field + (disabled ? " " + classes.disabled : "");
+  const fieldClass = `${classes.field} ${disabled ? classes.disabled : ""}`;
   const id = "sign-up-page-username";
   return (
     <section className={fieldClass}>
-      <label className={disabled ? classes.disabled : ""} htmlFor={id}>
-        Username
-      </label>
+      <label htmlFor={id}>Username</label>
       <input
         className={
           dispalyValidationMessage ? classes["error-border-color"] : ""
