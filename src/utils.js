@@ -12,7 +12,7 @@ const UserStatus = {
   UNAUTHORIZED: "unauthorized",
 };
 
-const getUsernameIfAuthorizedElseNull = async (signal) => {
+const getUsernameIfAuthorizedElseNull = async (signal = null) => {
   const url = import.meta.env.VITE_API_URL + "/usernames";
   const auth = localStorage.getItem("auth");
   try {
@@ -21,7 +21,7 @@ const getUsernameIfAuthorizedElseNull = async (signal) => {
       headers: {
         Authorization: auth,
       },
-      signal,
+      ...(signal ? { signal } : {}),
     });
     if (!res.ok) {
       return null;
