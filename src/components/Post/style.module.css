@@ -1,3 +1,6 @@
+.post {
+  word-break: break-word;
+}
 .post > header {
   margin-block-end: var(--size-2);
 }
