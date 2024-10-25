@@ -9,6 +9,7 @@
 .comment-items {
   display: grid;
   gap: var(--size-1);
+  justify-items: flex-start;
 }
 .dummy-add-comment-wrapper {
   text-decoration: none;
