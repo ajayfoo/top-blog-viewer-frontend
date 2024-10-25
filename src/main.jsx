@@ -13,6 +13,7 @@ import {
 import "./index.css";
 import AccountPage from "./components/AccountPage/index.jsx";
 import { getUsernameIfAuthorizedElseNull } from "./utils.js";
+import ErrorPage from "./components/ErrorPage/index.jsx";
 
 const redirectToHomeIfAuthorized = async () => {
   const username = await getUsernameIfAuthorizedElseNull();
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
