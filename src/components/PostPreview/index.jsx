@@ -13,7 +13,7 @@ function PostPreview({ post }) {
           <h2 className={classes.title}>{post.title}</h2>
           <p className={classes.body}>{post.body}</p>
         </div>
-        <p className={classes.author}>{post.author}</p>
+        <p className={classes.author}>{post.author.username}</p>
       </article>
     </Link>
   );
