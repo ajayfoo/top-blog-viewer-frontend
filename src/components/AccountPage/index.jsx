@@ -5,6 +5,7 @@ import { useUser } from "../../hooks.jsx";
 import { Navigate, useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/index.jsx";
 import { UserStatus } from "../../utils";
+import BecomeAuthorForm from "../BecomeAuthorForm/index.jsx";
 
 function AccountPage() {
   const user = useUser();
@@ -33,14 +34,17 @@ function AccountPage() {
 
   return (
     <main className={classes["account-page"]}>
-      <h1 className={classes.username}>{user.username}</h1>
-      <button
-        className={classes["logout-button"]}
-        type="button"
-        onClick={showConfirmModal}
-      >
-        Logout
-      </button>
+      <div>
+        <h1 className={classes.username}>{user.username}</h1>
+        <button
+          className={classes["logout-button"]}
+          type="button"
+          onClick={showConfirmModal}
+        >
+          Logout
+        </button>
+      </div>
+      <BecomeAuthorForm />
       <ConfirmModal
         onCancel={handleConfirmModalCancel}
         onConfirm={handleConfirmModalConfirm}
