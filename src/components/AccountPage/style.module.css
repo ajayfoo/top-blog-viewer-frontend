@@ -5,20 +5,23 @@
   font-size: 1.1rem;
 }
 
-.account-page>* {
+.account-page > * {
   position: relative;
   padding-block-end: var(--size-2);
   margin-block-end: var(--size-2);
 }
 
-.account-page>*::after {
-  content: '';
+.account-page > *::after {
+  content: "";
   border-block-end: 1px solid var(--outline);
   --line-length: 60vw;
   inline-size: var(--line-length);
   position: absolute;
   top: 100%;
   left: calc(50% - (var(--line-length) / 2));
+}
+.account-page > :last-child::after {
+  border-block-end: none;
 }
 
 .username {
@@ -47,6 +50,6 @@
   justify-content: center;
 }
 
-.spinner>svg>g {
+.spinner > svg > g {
   stroke: var(--on-surface);
 }

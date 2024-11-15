@@ -33,25 +33,27 @@ function AccountPage() {
   };
 
   return (
-    <main className={classes["account-page"]}>
-      <div className={classes["user-logout"]}>
-        <p className={classes.username}>{user.username}</p>
-        <button
-          className={classes["logout-button"]}
-          type="button"
-          onClick={showConfirmModal}
-        >
-          Logout
-        </button>
-      </div>
-      {user.isAuthor || <BecomeAuthorForm />}
+    <>
+      <main className={classes["account-page"]}>
+        <div className={classes["user-logout"]}>
+          <p className={classes.username}>{user.username}</p>
+          <button
+            className={classes["logout-button"]}
+            type="button"
+            onClick={showConfirmModal}
+          >
+            Logout
+          </button>
+        </div>
+        {user.isAuthor || <BecomeAuthorForm />}
+      </main>
       <ConfirmModal
         onCancel={handleConfirmModalCancel}
         onConfirm={handleConfirmModalConfirm}
         message="Are you sure you want to logout?"
         ref={confirmModalRef}
       />
-    </main>
+    </>
   );
 }
 
