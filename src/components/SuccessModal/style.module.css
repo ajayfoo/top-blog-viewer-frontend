@@ -1,0 +1,32 @@
+.success-modal {
+  background-color: var(--surface-container-high);
+  color: var(--on-surface);
+  border: none;
+  border-radius: var(--size-2);
+}
+.info {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  margin-block-end: var(--size-2);
+}
+
+.icon {
+  inline-size: 2em;
+  block-size: 2em;
+  fill: var(--on-surface);
+}
+
+.message {
+  color: var(--on-surface);
+}
+
+.success-modal > button {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--size-1);
+  padding: var(--size-1) var(--size-2);
+  display: block;
+  margin: 0 auto;
+}
