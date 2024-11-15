@@ -8,7 +8,7 @@ import { UserStatus } from "../../utils";
 
 function CommentsSection() {
   const { postId } = useParams();
-  const user = useUser();
+  const { user } = useUser();
   const [comments, setComments] = useComments(postId);
   const handleAddComment = (newComment) => {
     setComments([newComment, ...comments]);

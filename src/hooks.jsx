@@ -86,12 +86,9 @@ const useFetchUser = () => {
       controller.abort();
     };
   }, []);
-  return user;
+  return [user, setUser];
 };
 
-const useUser = () => {
-  const user = useContext(UserContext);
-  return user;
-};
+const useUser = () => useContext(UserContext);
 
 export { usePostsMap, useComments, useLocalStorage, useFetchUser, useUser };

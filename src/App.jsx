@@ -7,12 +7,18 @@ import { UserContext } from "./contexts";
 
 function App() {
   const postsMap = usePostsMap();
-  const user = useFetchUser();
+  const [user, setUser] = useFetchUser();
+  const setUserIsAuthor = (isAuthor) => {
+    setUser({
+      ...user,
+      isAuthor,
+    });
+  };
   return (
     <div className={classes.app}>
       <MainNav />
       {postsMap ? (
-        <UserContext.Provider value={user}>
+        <UserContext.Provider value={{ user, setUserIsAuthor }}>
           <Outlet context={{ postsMap }} />
         </UserContext.Provider>
       ) : (

@@ -8,7 +8,7 @@ import { UserStatus } from "../../utils";
 import BecomeAuthorForm from "../BecomeAuthorForm/index.jsx";
 
 function AccountPage() {
-  const user = useUser();
+  const { user } = useUser();
   const confirmModalRef = useRef(null);
   const navigate = useNavigate();
 

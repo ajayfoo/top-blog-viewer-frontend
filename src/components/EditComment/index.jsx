@@ -25,7 +25,7 @@ const sendPatchCommentRequest = async (postId, id, content) => {
 function EditComment({ onUpdateComment, initialComment, onCancel }) {
   const { postId } = useParams();
   const [content, setContent] = useState(initialComment.content);
-  const user = useUser();
+  const { user } = useUser();
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);

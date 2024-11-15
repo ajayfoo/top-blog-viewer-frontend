@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import ErrorModal from "../ErrorModal";
 import classes from "./style.module.css";
 import Spinner from "../Spinner";
+import { useUser } from "../../hooks";
 
 const becomeAuthor = (passcode) => {
   const url = import.meta.env.VITE_API_URL + "/authors";
@@ -18,6 +19,7 @@ const becomeAuthor = (passcode) => {
 };
 
 function BecomeAuthorForm() {
+  const { setUserIsAuthor } = useUser();
   const [passcode, setPasscode] = useState("");
   const [error, setError] = useState(null);
   const [isSending, setIsSending] = useState(false);
@@ -45,6 +47,7 @@ function BecomeAuthorForm() {
       if (!res.ok) {
         throw new Error(res.status + ": " + res.statusText);
       }
+      setUserIsAuthor(true);
       console.log("successfully became author");
     } catch (err) {
       console.error(err);

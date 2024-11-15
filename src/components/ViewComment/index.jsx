@@ -30,7 +30,7 @@ function ViewComment({ comment, onClickEdit, onDeleteComment }) {
   const [error, setError] = useState(null);
   const errorModalRef = useRef(null);
   const timeElapsed = getElapsedTime(comment.updatedAt);
-  const user = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     if (!showDeleteModal) return;
