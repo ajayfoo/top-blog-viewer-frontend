@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import classes from "./style.module.css";
+import HomeIcon from "../Icons/HomeIcon.jsx";
+import PersonIcon from "../Icons/PersonIcon.jsx";
 
 function MainNav() {
   return (
@@ -9,12 +11,14 @@ function MainNav() {
           to="/"
           className={({ isActive }) => (isActive ? classes.active : "")}
         >
+          <HomeIcon className={classes.icon} />
           Home
         </NavLink>
         <NavLink
           to="/account"
           className={({ isActive }) => (isActive ? classes.active : "")}
         >
+          <PersonIcon className={classes.icon} />
           Account
         </NavLink>
       </div>

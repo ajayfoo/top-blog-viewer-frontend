@@ -20,6 +20,9 @@
   padding: var(--size-1) var(--size-2);
   border: 1px solid transparent;
   border-radius: var(--size-1);
+  display: flex;
+  align-items: center;
+  gap: var(--size-1);
 }
 
 .nav-items > a.active {
@@ -29,4 +32,9 @@
 
 .nav-items > a:hover {
   border-color: var(--outline);
+}
+
+.icon {
+  inline-size: 1.1em;
+  fill: var(--on-surface);
 }

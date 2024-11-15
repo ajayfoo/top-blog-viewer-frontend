@@ -14,10 +14,10 @@
     sans-serif;
   color-scheme: light dark;
   --size-1: clamp(0.35rem, 0.75vw, 0.5rem);
-  --size-2: clamp(0.50rem, 1.5vw, 1rem);
-  --size-3: clamp(1.50rem, 3vw, 2rem);
+  --size-2: clamp(0.5rem, 1.5vw, 1rem);
+  --size-3: clamp(1.5rem, 3vw, 2rem);
 
-  --fs-1: clamp(1.25rem, 1.5vw, 1.5rem);
+  --fs-1: clamp(1.15rem, 1.5vw, 1.25rem);
 }
 
 @media screen and (prefers-color-scheme: light) {
