@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState, useSyncExternalStore } from "react";
 import { UserContext } from "./contexts";
-import { getUsernameIfAuthorizedElseNull, UserStatus } from "./utils";
+import { getUserIfAuthorizedElseNull, UserStatus } from "./utils";
 
 const useFetchData = (url) => {
   const [data, setData] = useState(null);
@@ -74,9 +74,9 @@ const useFetchUser = () => {
   useEffect(() => {
     const controller = new AbortController();
     const fetchUserAndSetIt = async () => {
-      const username = await getUsernameIfAuthorizedElseNull(controller.signal);
-      if (username) {
-        setUser({ status: UserStatus.AUTHORIZED, username });
+      const user = await getUserIfAuthorizedElseNull(controller.signal);
+      if (user) {
+        setUser({ status: UserStatus.AUTHORIZED, ...user });
       } else {
         setUser({ status: UserStatus.UNAUTHORIZED });
       }

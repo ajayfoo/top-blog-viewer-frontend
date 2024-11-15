@@ -1,8 +1,34 @@
 .account-page {
   margin-inline: var(--size-2);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--size-1);
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.account-page>* {
+  position: relative;
+  padding-block-end: var(--size-2);
+  margin-block-end: var(--size-2);
+}
+
+.account-page>*::after {
+  content: '';
+  border-block-end: 1px solid var(--outline);
+  --line-length: 60vw;
+  inline-size: var(--line-length);
+  position: absolute;
+  top: 100%;
+  left: calc(50% - (var(--line-length) / 2));
+}
+
+.username {
+  font-weight: 600;
+}
+
+.user-logout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-3);
   align-items: center;
 }
 
@@ -20,6 +46,7 @@
   display: flex;
   justify-content: center;
 }
-.spinner > svg > g {
+
+.spinner>svg>g {
   stroke: var(--on-surface);
 }

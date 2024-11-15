@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import ErrorModal from "../ErrorModal";
+import classes from './style.module.css'
 
 const becomeAuthor = (passcode) => {
   const url = import.meta.env.VITE_API_URL + "/authors";
@@ -49,12 +50,12 @@ function BecomeAuthorForm() {
   }
 
   const passcodeFieldId = 'become-author-form-passcode';
-  return <form onSubmit={handleSubmit}>
-    <section>
+  return <form onSubmit={handleSubmit} className={classes.form}>
+    <section className={classes.field}>
       <label htmlFor={passcodeFieldId}>Passcode</label>
       <input required type="text" id={passcodeFieldId} value={passcode} onChange={handlePasscodeChange} />
     </section>
-    <button>Become Author</button>
+    <button className={classes['become-admin']}>Become Author</button>
     {error && (
       <ErrorModal
         message={error}

@@ -34,8 +34,8 @@ function AccountPage() {
 
   return (
     <main className={classes["account-page"]}>
-      <div>
-        <h1 className={classes.username}>{user.username}</h1>
+      <div className={classes["user-logout"]}>
+        <p className={classes.username}>{user.username}</p>
         <button
           className={classes["logout-button"]}
           type="button"
@@ -44,7 +44,7 @@ function AccountPage() {
           Logout
         </button>
       </div>
-      <BecomeAuthorForm />
+      {user.isAuthor || <BecomeAuthorForm />}
       <ConfirmModal
         onCancel={handleConfirmModalCancel}
         onConfirm={handleConfirmModalConfirm}
