@@ -1,5 +1,13 @@
+.icon {
+  inline-size: 1.5em;
+  fill: var(--on-primary);
+}
 .post {
   word-break: break-word;
+}
+.post img {
+  max-inline-size: 100%;
+  max-block-size: auto;
 }
 .post > header {
   margin-block-end: var(--size-2);
@@ -18,4 +26,9 @@
   line-height: 1.2lh;
   word-spacing: 0.15rem;
   letter-spacing: 0.05rem;
+}
+
+.header {
+  display: grid;
+  gap: var(--size-2);
 }
