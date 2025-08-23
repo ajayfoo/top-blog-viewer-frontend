@@ -38,13 +38,8 @@ const router = createBrowserRouter([
         element: <AccountPage />,
       },
       {
-        path: "/posts",
-        children: [
-          {
-            path: "/posts/:postId",
-            element: <PostPage />,
-          },
-        ],
+        path: "/posts/:postId",
+        element: <PostPage />,
       },
     ],
   },
@@ -57,6 +52,11 @@ const router = createBrowserRouter([
     path: "/auth/sign-up",
     element: <SignUpPage />,
     loader: redirectToHomeIfAuthorized,
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
