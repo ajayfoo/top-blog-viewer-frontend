@@ -8,7 +8,11 @@ function HomePage() {
   for (const post of postsMap.values()) {
     postPreviews.push(<PostPreview key={post.id} post={post} />);
   }
-  return <main className={classes["home-page"]}>{postPreviews}</main>;
+  return (
+    <main className={classes["home-page"]}>
+      <div className={classes["posts"]}>{postPreviews}</div>
+    </main>
+  );
 }
 
 export default HomePage;
