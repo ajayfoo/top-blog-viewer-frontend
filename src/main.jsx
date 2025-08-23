@@ -14,6 +14,7 @@ import "./index.css";
 import AccountPage from "./components/AccountPage/index.jsx";
 import { getUserIfAuthorizedElseNull } from "./utils.js";
 import ErrorPage from "./components/ErrorPage/index.jsx";
+import NotFoundPage from "./components/NotFoundPage/index.jsx";
 
 const redirectToHomeIfAuthorized = async () => {
   const user = await getUserIfAuthorizedElseNull();
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <ErrorPage />,
+    element: <NotFoundPage />,
     errorElement: <ErrorPage />,
   },
 ]);
