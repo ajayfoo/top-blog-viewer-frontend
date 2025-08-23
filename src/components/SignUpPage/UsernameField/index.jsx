@@ -5,6 +5,38 @@ import Spinner from "../../Spinner";
 import TickIcon from "../../Icons/TickIcon";
 import CloseIcon from "../../Icons/CloseIcon";
 
+const getUsernameValidationMsg = (change, minLength, maxLength) => {
+  const value = change.value;
+  if (value.length === 0) {
+    return UsernameValidationMessages.EMTPY;
+  } else if (value.length < minLength || value.length > maxLength) {
+    return UsernameValidationMessages.OUTSIDE_RANGE;
+  } else if (!isAlphaNumericOrUnderscore(value)) {
+    return UsernameValidationMessages.INVALID_CHARACTERS;
+  } else if (change.availability === UsernameAvailability.UNAVAILABLE) {
+    return UsernameValidationMessages.UNAVAILABLE;
+  } else {
+    return UsernameValidationMessages.VALID;
+  }
+};
+
+const isAlphaNumericOrUnderscore = (str) => {
+  let code, i, len;
+
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (
+      !(code > 47 && code < 58) && // numeric (0-9)
+      !(code > 64 && code < 91) && // upper alpha (A-Z)
+      !(code > 96 && code < 123) && // lower alpha (a-z)
+      !(code === 95)
+    ) {
+      return false;
+    }
+  }
+  return true;
+};
+
 const usernameIsAvailable = async (username, signal) => {
   try {
     const res = await fetch(
@@ -42,13 +74,20 @@ const UsernameAvailability = {
   UNAVAILABLE: "unavailable",
 };
 
+const UsernameValidationMessages = {
+  VALID: null,
+  UNAVAILABLE: "Username is unavailable",
+  EMTPY: "Required",
+  OUTSIDE_RANGE: "Must be 6-36 characters long",
+  INVALID_CHARACTERS: "Must contain only alphabets, numbers or underscore",
+};
+
 function UsernameField({
   value,
-  validationMsg,
   onChange,
   id,
-  minLength = null,
-  maxLength = null,
+  minLength,
+  maxLength,
   formSubmitAttempted = false,
   disabled = false,
   autoComplete = null,
@@ -60,54 +99,65 @@ function UsernameField({
     UsernameAvailability.UNDETERMINED
   );
 
-  useEffect(() => {
-    if (!validationMsg) {
-      ref.current.setCustomValidity("");
-      setShowValidationMsg(false);
-      return;
-    }
-    ref.current.setCustomValidity(validationMsg);
-  }, [validationMsg]);
+  const validationMsg = getUsernameValidationMsg(
+    { value, availability },
+    minLength,
+    maxLength
+  );
+  const canCheckForAvailability =
+    validationMsg === UsernameValidationMessages.UNAVAILABLE ||
+    validationMsg === UsernameValidationMessages.VALID;
 
   useEffect(() => {
-    if (validationMsg) {
-      setAvailability(UsernameAvailability.UNDETERMINED);
+    if (!canCheckForAvailability) {
       return;
     }
     const controller = new AbortController();
-    const updateAvailability = async () => {
+    const checkForAvailability = async () => {
       try {
         setAvailability(UsernameAvailability.CHECKING);
         const isAvailable = await usernameIsAvailable(value, controller.signal);
-        setAvailability(
-          isAvailable
-            ? UsernameAvailability.AVAILABLE
-            : UsernameAvailability.UNAVAILABLE
-        );
+        const newAvailability = isAvailable
+          ? UsernameAvailability.AVAILABLE
+          : UsernameAvailability.UNAVAILABLE;
+        setAvailability(newAvailability);
       } catch {
         setAvailability(UsernameAvailability.UNDETERMINED);
       }
     };
-    updateAvailability();
+    checkForAvailability();
     return () => {
       controller.abort();
+      setAvailability(UsernameAvailability.UNDETERMINED);
     };
-  }, [value, validationMsg]);
+  }, [canCheckForAvailability, value]);
+
+  useEffect(() => {
+    const validationMessageExists = !!validationMsg;
+    if (validationMessageExists) {
+      ref.current.setCustomValidity(validationMsg);
+    } else {
+      ref.current.setCustomValidity("");
+    }
+  }, [validationMsg, edited]);
 
   const handleBlur = () => {
     if (!edited) return;
     setShowValidationMsg(validationMsg ? true : false);
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
+    const value = e.target.value;
+    onChange(value);
     setEdited(true);
-    onChange(e);
   };
 
   const fieldClass = `${classes.field} ${disabled ? classes.disabled : ""}`;
   const dispalyValidationMessage =
     showValidationMsg || (formSubmitAttempted && validationMsg);
-  const availabilityIcon = getAvailabilityIconFor(availability);
+  const availabilityIcon = getAvailabilityIconFor(
+    canCheckForAvailability ? availability : null
+  );
   return (
     <section className={fieldClass}>
       <label htmlFor={id}>Username</label>
@@ -140,11 +190,10 @@ UsernameField.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   id: PropTypes.string,
-  validationMsg: PropTypes.string,
   autoComplete: PropTypes.string,
   maxLength: PropTypes.number,
   minLength: PropTypes.number,
   formSubmitAttempted: PropTypes.bool,
 };
 
-export default UsernameField;
+export { UsernameField, UsernameAvailability };
