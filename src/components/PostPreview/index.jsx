@@ -8,7 +8,12 @@ const formattedBody = (quillContents) => {
   const parsedBody = JSON.parse(quillContents).ops;
   let bodyContent = "";
   for (const ele of parsedBody) {
-    bodyContent += ele.insert;
+    const content = ele.insert;
+    if (typeof content === "string") {
+      bodyContent += ele.insert;
+    } else {
+      bodyContent += "🖼️";
+    }
     if (bodyContent.length > POST_PREVIEW_MAX_LENGTH) {
       break;
     }
