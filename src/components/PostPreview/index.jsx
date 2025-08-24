@@ -10,9 +10,13 @@ const formattedBody = (quillContents) => {
   for (const ele of parsedBody) {
     const content = ele.insert;
     if (typeof content === "string") {
-      bodyContent += ele.insert;
-    } else {
+      bodyContent += content;
+    } else if (content.image) {
       bodyContent += "🖼️";
+    } else if (content.divider) {
+      bodyContent += "—";
+    } else {
+      bodyContent += "?";
     }
     if (bodyContent.length > POST_PREVIEW_MAX_LENGTH) {
       break;
