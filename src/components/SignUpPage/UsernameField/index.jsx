@@ -75,7 +75,7 @@ const UsernameAvailability = {
 };
 
 const UsernameValidationMessages = {
-  VALID: null,
+  VALID: "",
   UNAVAILABLE: "Username is unavailable",
   EMTPY: "Required",
   OUTSIDE_RANGE: "Must be 6-36 characters long",
@@ -133,13 +133,13 @@ function UsernameField({
   }, [canCheckForAvailability, value]);
 
   useEffect(() => {
-    const validationMessageExists = !!validationMsg;
-    if (validationMessageExists) {
-      ref.current.setCustomValidity(validationMsg);
-    } else {
-      ref.current.setCustomValidity("");
+    ref.current.setCustomValidity(validationMsg);
+    if (validationMsg === UsernameValidationMessages.UNAVAILABLE) {
+      setShowValidationMsg(true);
+    } else if (!validationMsg) {
+      setShowValidationMsg(false);
     }
-  }, [validationMsg, edited]);
+  }, [validationMsg]);
 
   const handleBlur = () => {
     if (!edited) return;
