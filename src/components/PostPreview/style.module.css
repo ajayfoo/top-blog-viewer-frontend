@@ -36,4 +36,5 @@
 .author {
   color: var(--secondary);
   font-weight: 600;
+  margin-inline: auto 0;
 }
