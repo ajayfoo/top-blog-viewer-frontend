@@ -91,4 +91,20 @@ const useFetchUser = () => {
 
 const useUser = () => useContext(UserContext);
 
-export { usePostsMap, useComments, useLocalStorage, useFetchUser, useUser };
+const usePageTitle = (title) => {
+  useEffect(() => {
+    document.title = title;
+    return () => {
+      document.title = "TOP Blog";
+    };
+  }, [title]);
+};
+
+export {
+  usePostsMap,
+  useComments,
+  useLocalStorage,
+  useFetchUser,
+  useUser,
+  usePageTitle,
+};

@@ -8,6 +8,7 @@ import validator from "validator";
 import { UsernameField } from "./UsernameField/index.jsx";
 import PasswordField from "./PasswordField/index.jsx";
 import GoToHome from "../GoToHome/index.jsx";
+import { usePageTitle } from "../../hooks.jsx";
 
 const updatePasswordValidationMsg = (value, setMsg) => {
   if (value.length === 0) {
@@ -207,6 +208,7 @@ function SignUpForm() {
 }
 
 function SignUpPage() {
+  usePageTitle("Sign Up");
   return (
     <main className={classes.main}>
       <div className={classes.wrapper}>

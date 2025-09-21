@@ -6,6 +6,7 @@ import ErrorModal from "../ErrorModal";
 import UsernameField from "./UsernameField";
 import PasswordField from "./PasswordField";
 import GoToHome from "../GoToHome";
+import { usePageTitle } from "../../hooks";
 
 const sendLoginRequest = async (username, password) => {
   const url = import.meta.env.VITE_API_URL + "/auth/login";
@@ -138,6 +139,7 @@ function LoginForm() {
 }
 
 function LoginPage() {
+  usePageTitle("Login");
   return (
     <main className={classes.main}>
       <div className={classes.wrapper}>

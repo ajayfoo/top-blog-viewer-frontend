@@ -1,8 +1,10 @@
 import PostPreview from "../PostPreview";
 import { useOutletContext } from "react-router-dom";
 import classes from "./style.module.css";
+import { usePageTitle } from "../../hooks";
 
 function HomePage() {
+  usePageTitle("Posts");
   const { postsMap } = useOutletContext();
   const postPreviews = [];
   for (const post of postsMap.values()) {

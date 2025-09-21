@@ -1,13 +1,14 @@
 import { useRef } from "react";
 import classes from "./style.module.css";
 import ConfirmModal from "../ConfirmModal";
-import { useUser } from "../../hooks.jsx";
+import { usePageTitle, useUser } from "../../hooks.jsx";
 import { Navigate, useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/index.jsx";
 import { UserStatus } from "../../utils";
 import BecomeAuthorForm from "../BecomeAuthorForm/index.jsx";
 
 function AccountPage() {
+  usePageTitle("Account");
   const { user } = useUser();
   const confirmModalRef = useRef(null);
   const navigate = useNavigate();

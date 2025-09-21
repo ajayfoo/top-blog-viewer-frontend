@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
-import { useFetchUser, usePostsMap } from "./hooks";
+import { useFetchUser, usePageTitle, usePostsMap } from "./hooks";
 import MainNav from "./components/MainNav";
 import classes from "./style.module.css";
 import Spinner from "./components/Spinner";
 import { UserContext } from "./contexts";
 
 function App() {
+  usePageTitle("TOP Blog");
   const postsMap = usePostsMap();
   const [user, setUser] = useFetchUser();
   const setUserIsAuthor = (isAuthor) => {
