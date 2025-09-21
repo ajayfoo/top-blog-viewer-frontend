@@ -1,9 +1,15 @@
+.ql-editor {
+  display: grid;
+}
+
 .ql-editor h1 {
   font-size: 2rem;
+  margin-block: 0.5rem;
 }
 
 .ql-editor h2 {
   font-size: 1.5rem;
+  margin-block: 0.25rem;
 }
 
 .ql-editor blockquote {
@@ -11,4 +17,12 @@
   margin-inline-start: 10px;
   padding-inline-start: 10px;
   border-inline-start: 3px solid;
+}
+
+.ql-editor img {
+  justify-self: center;
+}
+
+.ql-editor hr {
+  inline-size: 100%;
 }
