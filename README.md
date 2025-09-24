@@ -2,6 +2,10 @@
 
 https://github.com/user-attachments/assets/37c28738-7eca-45a3-8297-5d93f7da4289
 
+## Companion projects
+1. [TOP Blog Author Frontend](https://github.com/ajayfoo/top-blog-author-frontend)
+2. [TOP Blog API](https://github.com/ajayfoo/top-blog-api)
+
 ## Screenshots
 ### Sign Up Page
 <img width="1366" height="735" alt="signup" src="https://github.com/user-attachments/assets/19671f8d-ef5b-4f65-91b5-e3e8c062dde9" />
