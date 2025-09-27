@@ -36,7 +36,7 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
   }, [error]);
 
   const handleCommentChange = (e) => {
-    setContent(e.target.value);
+    setContent(e.target.value.trimStart());
   };
 
   const handleErrorModalClose = () => {
@@ -72,7 +72,8 @@ function EditComment({ onUpdateComment, initialComment, onCancel }) {
     }
   };
   const textareaId = "edit-comment-" + initialComment.id + "-textarea";
-  const buttonIsDisabled = content === "" || isSending;
+  const buttonIsDisabled =
+    content === "" || isSending || content === initialComment.content;
   return (
     <article className={classes["add-comment"]}>
       <section className={classes.field}>
