@@ -14,3 +14,11 @@ https://github.com/user-attachments/assets/6515f635-d330-40b1-8ef5-3f845bf9042f
 
 #### Post page
 <img width="320" height="998" alt="2025-09-24 16 42 45 localhost 113aae975479" src="https://github.com/user-attachments/assets/6b6a7781-ef3d-4944-865b-f86b59fdf15e" />
+
+## Credits
+### Images
+1. [Abstract image](https://www.pexels.com/photo/blue-and-red-galaxy-artwork-1629236/) by [Suzy Hazelwood](https://www.pexels.com/@suzyhazelwood/) from [pexels.com](https://www.pexels.com)
+2. [Work from home stock image](https://www.pexels.com/photo/person-holding-apple-magic-mouse-392018) by [Vojtech Okenka](https://www.pexels.com/@vojtech-okenka-127162/) from [pexels.com](https://www.pexels.com)
+
+### Post content
+1. [ChatGPT](https://chatgpt.com)
