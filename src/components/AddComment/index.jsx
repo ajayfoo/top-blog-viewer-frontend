@@ -37,7 +37,7 @@ function AddComment({ username, onAddComment }) {
   };
 
   const handleCommentChange = (e) => {
-    setComment(e.target.value);
+    setComment(e.target.value.trimStart());
   };
 
   const handleAddCommentClick = async () => {
