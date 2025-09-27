@@ -15,6 +15,7 @@ import AccountPage from "./components/AccountPage/index.jsx";
 import { getUserIfAuthorizedElseNull } from "./utils.js";
 import ErrorPage from "./components/ErrorPage/index.jsx";
 import NotFoundPage from "./components/NotFoundPage/index.jsx";
+import { ErrorMessage } from "./enums.js";
 
 const redirectToHomeIfAuthorized = async () => {
   const user = await getUserIfAuthorizedElseNull();
@@ -24,10 +25,25 @@ const redirectToHomeIfAuthorized = async () => {
   return null;
 };
 
+const checkServerStatus = async () => {
+  const url = import.meta.env.VITE_API_URL + "/posts";
+  try {
+    await fetch(url, {
+      mode: "cors",
+    });
+    return null;
+  } catch (error) {
+    if (error?.message === "Failed to fetch") {
+      error.message = ErrorMessage.SERVER_DOWN;
+    }
+    throw error;
+  }
+};
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: checkServerStatus,
     errorElement: <ErrorPage />,
     children: [
       {
