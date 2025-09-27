@@ -1,4 +1,4 @@
-@import url("../field.css");
+@import url("../../common-styles/field.css");
 
 .input-wrapper > input {
   font-family: inherit;

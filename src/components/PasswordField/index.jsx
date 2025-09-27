@@ -1,7 +1,7 @@
 import classes from "./style.module.css";
 import PropTypes from "prop-types";
-import ClosedEyeIcon from "../../Icons/ClosedEyeIcon";
-import OpenEyeIcon from "../../Icons/OpenEyeIcon";
+import ClosedEyeIcon from "../Icons/ClosedEyeIcon";
+import OpenEyeIcon from "../Icons/OpenEyeIcon";
 import { useEffect, useRef, useState } from "react";
 
 function PasswordField({

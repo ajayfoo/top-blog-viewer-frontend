@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorModal from "../ErrorModal";
 import UsernameField from "./UsernameField";
-import PasswordField from "./PasswordField";
+import PasswordField from "../PasswordField";
 import GoToHome from "../GoToHome";
 import { usePageTitle } from "../../hooks";
 
