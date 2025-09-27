@@ -5,7 +5,9 @@ import OpenEyeIcon from "../Icons/OpenEyeIcon";
 import { useEffect, useRef, useState } from "react";
 
 function PasswordField({
+  label = "Password",
   value,
+  id,
   onChange,
   disabled,
   validationMsg,
@@ -49,11 +51,10 @@ function PasswordField({
 
   const eyeButtonLabel = (isHidden ? "show" : "hide") + " password";
   const type = isHidden ? "password" : "text";
-  const id = "sign-up-page-password";
   const fieldClass = `${classes.field} ${disabled ? classes.disabled : ""}`;
   return (
     <section className={fieldClass}>
-      <label htmlFor={id}>Password</label>
+      <label htmlFor={id}>{label}</label>
       <div
         className={`${classes["input-wrapper"]} ${dispalyValidationMessage ? classes["error-border-color"] : ""}`}
       >
@@ -85,7 +86,9 @@ function PasswordField({
 }
 
 PasswordField.propTypes = {
+  label: PropTypes.string,
   value: PropTypes.string,
+  id: PropTypes.string,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   validationMsg: PropTypes.string,

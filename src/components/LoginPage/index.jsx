@@ -104,6 +104,7 @@ function LoginForm() {
         formSubmitAttempted={submitAttempted}
       />
       <PasswordField
+        id="login-form-password-field"
         disabled={isSending}
         value={password}
         onChange={handlePasswordChange}

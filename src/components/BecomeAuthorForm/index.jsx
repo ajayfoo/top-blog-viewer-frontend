@@ -4,6 +4,7 @@ import classes from "./style.module.css";
 import Spinner from "../Spinner";
 import { useUser } from "../../hooks";
 import SuccessModal from "../SuccessModal";
+import PasswordField from "../PasswordField";
 
 const becomeAuthor = (passcode) => {
   const url = import.meta.env.VITE_API_URL + "/authors";
@@ -70,21 +71,17 @@ function BecomeAuthorForm() {
     }
   };
 
-  const fieldClass = `${classes.field} ${isSending ? classes.disabled : ""}`;
   const passcodeFieldId = "become-author-form-passcode";
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
-      <section className={fieldClass}>
-        <label htmlFor={passcodeFieldId}>Passcode</label>
-        <input
-          disabled={isSending}
-          required
-          type="text"
-          id={passcodeFieldId}
-          value={passcode}
-          onChange={handlePasscodeChange}
-        />
-      </section>
+      <PasswordField
+        id={passcodeFieldId}
+        label="Passcode"
+        value={passcode}
+        onChange={handlePasscodeChange}
+        disabled={isSending}
+        validationMsg={null}
+      />
       <button disabled={isSending} className={classes["become-admin"]}>
         {isSending ? <Spinner /> : "Become Author"}
       </button>
