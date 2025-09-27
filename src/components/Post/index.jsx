@@ -30,6 +30,10 @@ function Post() {
     <section className={classes.post}>
       <header className={classes.header}>
         <h1 className={classes.title}>{post.title}</h1>
+        <p className="written-by">
+          Written by&nbsp;
+          <span className={classes.author}>{post.author.username}</span>
+        </p>
         <p className={classes["updated-at"]}>
           Last updated on <time dateTime={post.updatedAt}>{updatedAt}</time>
         </p>
